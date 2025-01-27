@@ -1,4 +1,8 @@
 package bts.sio.azurimmo.viewsmodel.batiment
 
-class AppartementViewModel {
+import androidx.lifecycle.ViewModel
+
+class AppartementViewModel : ViewModel(){
+
+
 }
