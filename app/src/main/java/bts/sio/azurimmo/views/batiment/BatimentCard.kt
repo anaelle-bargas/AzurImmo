@@ -27,7 +27,7 @@ fun BatimentCard(batiment: Batiment){
             modifier = Modifier.padding(16.dp)
         ){
             Text(text = batiment.adresse, style = MaterialTheme.typography.bodyLarge)
-            Text(text = batiment.ville, style = MaterialTheme.typography.bodyMedium)
+            Text(text = batiment.ville?:"Non renseigné", style = MaterialTheme.typography.bodyMedium)
         }
     }
 }

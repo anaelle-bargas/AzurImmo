@@ -25,7 +25,7 @@ fun AppartementCard (appartement: Appartement){
             modifier = Modifier.padding(8.dp)
         ) {
             Text(text=appartement.numero.toString(), style= MaterialTheme.typography.bodyLarge)
-            Text(text=appartement.description, style= MaterialTheme.typography.bodyMedium)
+            Text(text=appartement.description?:"Pas de description", style= MaterialTheme.typography.bodyMedium)
             Text(text=appartement.surface.toString(), style=MaterialTheme.typography.bodySmall)
             Text(text=appartement.nbrPieces.toString(), style=MaterialTheme.typography.bodySmall)
         }

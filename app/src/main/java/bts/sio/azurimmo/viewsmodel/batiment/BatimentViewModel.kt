@@ -5,11 +5,18 @@ import androidx.compose.runtime.mutableStateOf
 import bts.sio.azurimmo.model.Batiment
 import androidx.lifecycle.viewModelScope
 import androidx.lifecycle.ViewModel
+import bts.sio.azurimmo.api.RetrofitInstance
 import kotlinx.coroutines.launch
 
 class BatimentViewModel : ViewModel() {
-    private val _batiments = mutableStateOf(emptyList<Batiment>())
+    private val _batiments = mutableStateOf<List<Batiment>>(emptyList())
     val batiments: State<List<Batiment>> = _batiments
+
+    private val _isLoading = mutableStateOf(false)
+    val isLoading : State<Boolean> = _isLoading
+
+    private val _errorMessage = mutableStateOf<String?>(null)
+    val errorMessage : State<String?> = _errorMessage
 
     init {
         getBatiments()
@@ -17,11 +24,16 @@ class BatimentViewModel : ViewModel() {
 
     private fun getBatiments(){
         viewModelScope.launch{
-            _batiments.value=listOf(
-                    Batiment(1, "123 Rue Principale", "Nice"),
-                    Batiment(2, "456 Avenue des Champs", "Marseille"),
-                    Batiment(3, "789 Boulevard Haussmann", "Marseille")
-            )
+            _isLoading.value = true
+            try {
+                val response = RetrofitInstance.api.getBatiments()
+                _batiments.value = response
+            }catch (e:Exception){
+                _errorMessage.value = "Erreur : ${e.message}"
+            }finally {
+                _isLoading.value = false
+                println("pas de chargement")
+            }
         }
     }
 }
