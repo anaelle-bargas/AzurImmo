@@ -10,6 +10,7 @@ import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.Text
 import androidx.compose.material3.TextField
 import androidx.compose.runtime.Composable
+import androidx.compose.runtime.LaunchedEffect
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.unit.dp
@@ -19,12 +20,15 @@ import bts.sio.azurimmo.viewmodel.AppartementViewModel
 
 
 @Composable
-fun AppartementList (){
-    val viewModel:AppartementViewModel= viewModel()
+fun AppartementList (viewModel:AppartementViewModel= viewModel(), batimentId : Int){
     val appartements=viewModel.appartements.value
     val isLoading = viewModel.isLoading.value
     val errorMessage = viewModel.errorMessage.value
 
+
+    LaunchedEffect(batimentId) {
+        viewModel.getAppartementsByBatimentId(batimentId)
+    }
     Box(modifier =Modifier.fillMaxSize()){
         when{
             isLoading == true ->{

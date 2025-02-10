@@ -37,7 +37,7 @@ class AppartementViewModel : ViewModel(){
         }
     }
 
-    private fun getAppartementsByBatimentId(batimentId : Int){
+    fun getAppartementsByBatimentId(batimentId : Int){
         viewModelScope.launch{
             _isLoading.value = true
             try{

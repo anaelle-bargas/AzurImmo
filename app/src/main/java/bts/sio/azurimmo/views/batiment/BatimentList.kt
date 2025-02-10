@@ -17,8 +17,10 @@ import androidx.lifecycle.viewmodel.compose.viewModel
 
 
 @Composable
-fun BatimentList(){
-    val viewModel: BatimentViewModel =viewModel()
+fun BatimentList(
+    viewModel: BatimentViewModel =viewModel(),
+    onBatimentClick : (Int)->Unit
+){
     val batiments = viewModel.batiments.value
     val isLoading = viewModel.isLoading.value
     val errorMessage = viewModel.errorMessage.value
@@ -31,7 +33,7 @@ fun BatimentList(){
             errorMessage != null -> {
                 Text(
                     text=errorMessage ?:"Erreur Inconnue",
-                    modifier=Modifier
+                    modifier= Modifier
                         .align(Alignment.Center)
                         .padding(16.dp),
                     color=MaterialTheme.colorScheme.error
@@ -40,7 +42,7 @@ fun BatimentList(){
             else -> {
                 LazyColumn {
                     items(batiments){ batiment ->
-                        BatimentCard(batiment=batiment)
+                        BatimentCard(batiment=batiment, onClick= { onBatimentClick(batiment.id) })
                     }
                 }
             }

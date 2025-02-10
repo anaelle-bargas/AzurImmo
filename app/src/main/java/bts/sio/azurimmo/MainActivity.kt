@@ -23,15 +23,8 @@ import bts.sio.azurimmo.views.locataire.LocataireList
 class MainActivity : ComponentActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
-        setContent{
-            //ContratList()
-            //BatimentList()
-            AppartementList()
-            //AssocieList()
-            //LocataireList()
-
-            //InterventionList()
-
+        setContent {
+            MainScreen()
         }
     }
 }
