@@ -27,7 +27,7 @@ fun AppartementCard (appartement: Appartement){
             Text(text=appartement.numero.toString(), style= MaterialTheme.typography.bodyLarge)
             Text(text=appartement.description?:"Pas de description", style= MaterialTheme.typography.bodyMedium)
             Text(text=appartement.surface.toString(), style=MaterialTheme.typography.bodySmall)
-            Text(text=appartement.nbrPieces.toString(), style=MaterialTheme.typography.bodySmall)
+            Text(text=appartement.nbPiecesOriginal.toString(), style=MaterialTheme.typography.bodySmall)
         }
     }
 }

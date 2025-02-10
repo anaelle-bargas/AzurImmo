@@ -4,7 +4,7 @@ data class Appartement(
     val id:Int,
     val numero:Int,
     val surface: Double,
-    val nbrPieces : Int,
+    val nbPiecesOriginal : Int,
     val description: String,
     val batiment: Batiment
 )

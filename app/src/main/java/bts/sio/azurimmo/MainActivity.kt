@@ -25,12 +25,12 @@ class MainActivity : ComponentActivity() {
         super.onCreate(savedInstanceState)
         setContent{
             //ContratList()
-            //BatimentList()
+            BatimentList()
             //AppartementList()
             //AssocieList()
             //LocataireList()
 
-            InterventionList()
+            //InterventionList()
 
         }
     }
