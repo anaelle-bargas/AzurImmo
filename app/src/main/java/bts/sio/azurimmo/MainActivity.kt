@@ -13,14 +13,23 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.tooling.preview.Preview
 import bts.sio.azurimmo.ui.theme.AzurimmoTheme
 import bts.sio.azurimmo.views.appartement.AppartementList
+import bts.sio.azurimmo.views.associe.AssocieCard
+import bts.sio.azurimmo.views.associe.AssocieList
 import bts.sio.azurimmo.views.batiment.BatimentList
+import bts.sio.azurimmo.views.contrat.ContratList
+import bts.sio.azurimmo.views.locataire.LocataireList
 
 class MainActivity : ComponentActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContent{
-            BatimentList()
+            //ContratList()
+            //BatimentList()
             //AppartementList()
+            //AssocieList()
+            //LocataireList()
+
+            InterventionList()
 
         }
     }

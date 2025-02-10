@@ -8,5 +8,6 @@ data class Contrat(
     val montant_loyer: Float,
     val montant_charges: Float,
     val appartement: Appartement,
-    val associe:Associe
+    val associe:Associe,
+    val locataire:Locataire
 )
