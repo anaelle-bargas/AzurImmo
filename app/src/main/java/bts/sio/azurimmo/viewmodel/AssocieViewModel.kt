@@ -1,10 +1,9 @@
-package bts.sio.azurimmo.viewsmodel.batiment
+package bts.sio.azurimmo.viewmodel
 
 import androidx.compose.runtime.State
 import androidx.compose.runtime.mutableStateOf
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
-import androidx.lifecycle.viewmodel.compose.viewModel
 import bts.sio.azurimmo.api.RetrofitInstance
 import bts.sio.azurimmo.model.Associe
 import kotlinx.coroutines.launch

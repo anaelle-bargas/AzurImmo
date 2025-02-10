@@ -1,4 +1,4 @@
-package bts.sio.azurimmo.viewsmodel.batiment
+package bts.sio.azurimmo.viewmodel
 
 import androidx.compose.runtime.State
 import androidx.compose.runtime.mutableStateOf

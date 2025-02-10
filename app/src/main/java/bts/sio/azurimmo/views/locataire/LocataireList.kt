@@ -2,7 +2,6 @@ package bts.sio.azurimmo.views.locataire
 
 import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.fillMaxSize
-import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.lazy.LazyColumn
 import androidx.compose.foundation.lazy.items
 import androidx.compose.material3.CircularProgressIndicator
@@ -12,11 +11,11 @@ import androidx.compose.runtime.Composable
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.lifecycle.viewmodel.compose.viewModel
-import bts.sio.azurimmo.viewsmodel.batiment.LocataireViewModel
+import bts.sio.azurimmo.viewmodel.LocataireViewModel
 
 @Composable
 fun LocataireList() {
-    val viewModel:LocataireViewModel= viewModel()
+    val viewModel: LocataireViewModel = viewModel()
     val locataires = viewModel.locataires.value
     val errorMessage = viewModel.errorMessage.value
     val isLoading = viewModel.isLoading.value

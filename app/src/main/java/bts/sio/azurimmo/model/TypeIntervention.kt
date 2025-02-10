@@ -1,3 +1,5 @@
 package bts.sio.azurimmo.model
 
-data class TypeIntervention()
+data class TypeIntervention(
+    val libelle:String
+)

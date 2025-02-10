@@ -1,4 +1,6 @@
 package bts.sio.azurimmo.model
 
-class Intervenant {
-}
+
+data class Intervenant (
+    val nom: String
+)
