@@ -9,8 +9,8 @@ import bts.sio.azurimmo.model.Intervention
 import kotlinx.coroutines.launch
 
 class InterventionViewModel:ViewModel() {
-    private val _intervention= mutableStateOf<List<Intervention>>(emptyList())
-    val intervention:State<List<Intervention>> = _intervention
+    private val _interventions= mutableStateOf<List<Intervention>>(emptyList())
+    val interventions:State<List<Intervention>> = _interventions
 
     private val _isLoading = mutableStateOf(false)
     val isLoading:State<Boolean> = _isLoading
@@ -27,7 +27,7 @@ class InterventionViewModel:ViewModel() {
             _isLoading.value=true
             try {
                 val response = RetrofitInstance.api.getInterventions()
-                _intervention.value = response
+                _interventions.value = response
             }catch (e:Exception){
                 _errorMessage.value="Erreur dans la récupération des intervention: ${e.message}"
             }finally {

@@ -1,4 +1,4 @@
-package bts.sio.azurimmo.views.appartement
+package bts.sio.azurimmo.views.contrat
 
 import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.fillMaxSize
@@ -8,38 +8,39 @@ import androidx.compose.foundation.lazy.items
 import androidx.compose.material3.CircularProgressIndicator
 import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.Text
-import androidx.compose.material3.TextField
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.unit.dp
 import androidx.lifecycle.viewmodel.compose.viewModel
-import bts.sio.azurimmo.views.batiment.BatimentCard
-import bts.sio.azurimmo.viewmodel.AppartementViewModel
-
+import bts.sio.azurimmo.model.Intervention
+import bts.sio.azurimmo.viewmodel.InterventionViewModel
+import bts.sio.azurimmo.views.intervention.InterventionCard
 
 @Composable
-fun AppartementList (){
-    val viewModel:AppartementViewModel= viewModel()
-    val appartements=viewModel.appartements.value
+fun InterventionList(){
+    val viewModel: InterventionViewModel = viewModel()
+    val interventions=viewModel.interventions.value
     val isLoading = viewModel.isLoading.value
     val errorMessage = viewModel.errorMessage.value
 
-    Box(modifier =Modifier.fillMaxSize()){
+    Box(modifier = Modifier.fillMaxSize()){
+
         when{
-            isLoading == true ->{
+            isLoading->{
                 CircularProgressIndicator(modifier = Modifier.align(Alignment.Center))
             }
-            errorMessage != null->{
-                Text(text = errorMessage?:"Erreur inconnue", modifier = Modifier.align(Alignment.Center).padding(16.dp), color = MaterialTheme.colorScheme.error)
-            }
-            else->{
-                LazyColumn {
-                    items(appartements){ appartement ->
-                        AppartementCard(appartement=appartement)
-                    }
+            errorMessage!=null->{
+                Text(text=errorMessage?:"Erreur inconnue", modifier = Modifier.align(Alignment.Center).padding(16.dp), color = MaterialTheme.colorScheme.error)
+            }else->{
+            LazyColumn {
+                items(interventions){ intervention ->
+                    InterventionCard(intervention=intervention)
                 }
             }
         }
+
+        }
     }
+
 }

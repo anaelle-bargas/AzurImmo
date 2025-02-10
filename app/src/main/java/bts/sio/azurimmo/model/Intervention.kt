@@ -1,6 +1,6 @@
 package bts.sio.azurimmo.model
 
-import java.sql.Date
+import java.util.Date
 
 data class Intervention(
     val description:String,

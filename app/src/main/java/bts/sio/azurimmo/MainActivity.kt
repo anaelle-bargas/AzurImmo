@@ -17,6 +17,7 @@ import bts.sio.azurimmo.views.associe.AssocieCard
 import bts.sio.azurimmo.views.associe.AssocieList
 import bts.sio.azurimmo.views.batiment.BatimentList
 import bts.sio.azurimmo.views.contrat.ContratList
+import bts.sio.azurimmo.views.contrat.InterventionList
 import bts.sio.azurimmo.views.locataire.LocataireList
 
 class MainActivity : ComponentActivity() {
