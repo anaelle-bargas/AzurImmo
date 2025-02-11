@@ -1,6 +1,9 @@
 package bts.sio.azurimmo.views.batiment
 
+import androidx.compose.foundation.background
 import androidx.compose.foundation.layout.Box
+import androidx.compose.foundation.layout.Column
+import androidx.compose.foundation.layout.Row
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.padding
@@ -45,6 +48,7 @@ fun BatimentList(
             else -> {
                 LazyColumn {
                     item{
+
                         Text(
                             text = "Liste des bâtiments",
                             textAlign = TextAlign.Center,
