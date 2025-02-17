@@ -55,4 +55,23 @@ class BatimentViewModel : ViewModel() {
         }
 
     }
+
+    fun addBatiment(batiment:Batiment){
+        viewModelScope.launch {
+            _isLoading.value=true
+            try{
+                var response = RetrofitInstance.api.addBatiment(batiment)
+                if(response.isSuccessful()){
+                    getBatiments()
+                }
+                else{
+                    _errorMessage.value="Erreur dans l'ajout d'un batiment ${response.message()}"
+                }
+            }catch (e:Exception){
+                _errorMessage.value="Erreur dans l'ajout d'un batiment : ${e.message}"
+            }finally {
+                _isLoading.value=false
+            }
+        }
+    }
 }
