@@ -13,10 +13,12 @@ import androidx.navigation.compose.NavHost
 import androidx.navigation.compose.composable
 import androidx.navigation.compose.rememberNavController
 import androidx.navigation.navArgument
+import bts.sio.azurimmo.views.AppFooter
 import bts.sio.azurimmo.views.AppHeader
 import bts.sio.azurimmo.views.AppNavigation
 import bts.sio.azurimmo.views.appartement.AppartementList
 import bts.sio.azurimmo.views.batiment.BatimentList
+import bts.sio.azurimmo.views.navBar.AppNavBar
 
 
 @Composable
@@ -24,7 +26,8 @@ fun MainScreen() {
     val navController = rememberNavController()
 
     Scaffold (
-        topBar = { AppHeader() }
+        topBar = { AppHeader() },
+        bottomBar = { AppNavBar(navController) }
     ){ innerPadding->
         AppNavigation(navController, modifier = Modifier.padding(innerPadding))
     }

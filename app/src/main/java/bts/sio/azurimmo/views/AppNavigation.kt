@@ -5,15 +5,14 @@ import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Modifier
-import androidx.navigation.NavController
 import androidx.navigation.NavHostController
 import androidx.navigation.NavType
 import androidx.navigation.compose.NavHost
 import androidx.navigation.compose.composable
-import androidx.navigation.compose.rememberNavController
 import androidx.navigation.navArgument
 import bts.sio.azurimmo.views.appartement.AppartementList
 import bts.sio.azurimmo.views.batiment.BatimentList
+import bts.sio.azurimmo.views.locataire.LocataireList
 
 @Composable
 fun AppNavigation(navController: NavHostController, modifier: Modifier){
@@ -33,7 +32,7 @@ fun AppNavigation(navController: NavHostController, modifier: Modifier){
             val batimentId=backStackEntry.arguments?.getInt("batimentId")
             if(batimentId!=null){
                 AppartementList(
-                    batimentId=batimentId,
+                    batimentId =batimentId,
                     onAddAppartementClick = {navController.navigate("add_appartement")}
                 )
                 Log.d("BatimentClik", "Batiment cliqué : $batimentId")
@@ -42,5 +41,15 @@ fun AppNavigation(navController: NavHostController, modifier: Modifier){
             }
 
         }
+
+
+        composable("locataires_list"){
+            LocataireList(onAddLocataireClick = {navController.navigate("add_locataire")})
+        }
+
+        composable("appartement_list"){
+            AppartementList(onAddAppartementClick = {navController.navigate(route = "add_appartement")})
+        }
+
     }
 }
