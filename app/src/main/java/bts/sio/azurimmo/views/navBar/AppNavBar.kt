@@ -23,7 +23,8 @@ fun AppNavBar(navController: NavController) {
     val items = listOf(
         BottomNavItem("Batiments", Icons.Default.Home, "batiment_list"),
         BottomNavItem("Locataires", Icons.Default.Build, "locataires_list"),
-        BottomNavItem("Appartements", Icons.Default.CheckCircle, "appartement_list")
+        BottomNavItem("Appartements", Icons.Default.CheckCircle, "appartement_list"),
+        BottomNavItem("Interventions", Icons.Default.Build, "interventions_list")
     )
 
 

@@ -14,6 +14,8 @@ import bts.sio.azurimmo.views.appartement.AppartementAdd
 import bts.sio.azurimmo.views.appartement.AppartementList
 import bts.sio.azurimmo.views.batiment.BatimentAdd
 import bts.sio.azurimmo.views.batiment.BatimentList
+import bts.sio.azurimmo.views.contrat.InterventionList
+import bts.sio.azurimmo.views.intervention.InterventionAdd
 import bts.sio.azurimmo.views.locataire.LocataireList
 
 @Composable
@@ -55,6 +57,14 @@ fun AppNavigation(navController: NavHostController, modifier: Modifier){
             AppartementList(onAddAppartementClick = {navController.navigate(route = "add_appartement")})
         }
 
+        composable("interventions_list"){
+            InterventionList(onAddInterventionClick = {navController.navigate("add_intervention")})
+        }
+
+        composable("add_intervention"){
+            InterventionAdd()
+        }
+
         composable("add_batiment"){
             BatimentAdd(onBatimentAdd = {
                 navController.popBackStack()
@@ -74,6 +84,15 @@ fun AppNavigation(navController: NavHostController, modifier: Modifier){
             }
 
         }
+
+        composable("add_appartement"){
+            AppartementAdd(
+                onAddAppartement = { navController.popBackStack() },
+                idBatiment = null
+            )
+        }
+
+
 
     }
 }

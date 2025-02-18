@@ -1,5 +1,6 @@
 package bts.sio.azurimmo.views.batiment
 
+import android.graphics.drawable.Icon
 import androidx.compose.foundation.background
 import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.Column
@@ -12,8 +13,12 @@ import androidx.compose.foundation.lazy.LazyColumn
 import androidx.compose.foundation.lazy.items
 import androidx.compose.foundation.rememberScrollState
 import androidx.compose.foundation.verticalScroll
+import androidx.compose.material.icons.Icons
+import androidx.compose.material.icons.filled.Add
 import androidx.compose.material3.Button
 import androidx.compose.material3.CircularProgressIndicator
+import androidx.compose.material3.FloatingActionButton
+import androidx.compose.material3.Icon
 import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
@@ -56,15 +61,7 @@ fun BatimentList(
             }
             else -> {
                 Column  {
-                    Button(
-                        onClick = onAddBatimentClick,
-                        modifier = Modifier
-                            .widthIn(min=150.dp, max=300.dp)
-                            .align(Alignment.CenterHorizontally)
-                            .padding(16.dp)
-                    ) {
-                        Text("Ajouter un bâtiment")
-                    }
+
                     LazyColumn {
                         item{
 
@@ -83,6 +80,13 @@ fun BatimentList(
                         }
                     }
                 }
+
+                FloatingActionButton(
+                    onClick = {onAddBatimentClick()},
+                    modifier = Modifier.align(Alignment.BottomEnd).padding(16.dp),
+                    containerColor = MaterialTheme.colorScheme.primary,
+                    content = { Icon(Icons.Default.Add, contentDescription = "Ajouter un batiment")}
+                )
             }
         }
     }

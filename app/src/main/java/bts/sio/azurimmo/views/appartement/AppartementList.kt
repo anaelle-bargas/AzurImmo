@@ -37,7 +37,7 @@ import bts.sio.azurimmo.viewmodel.BatimentViewModel
 fun AppartementList (
     viewModel:AppartementViewModel= viewModel(),
     batimentId: Int? = null,
-    onAddAppartementClick: (Int) -> Unit
+    onAddAppartementClick: (Int?) -> Unit
 ){
     val viewModelBat:BatimentViewModel= viewModel()
     val batiment = viewModelBat.batiment.value
@@ -130,17 +130,22 @@ fun AppartementList (
                     }
                 }
 
-                if(batimentId != null){
+                if(batimentId!=null) {
+
                     FloatingActionButton(
-                        onClick = {onAddAppartementClick(batimentId)},
+                        onClick = { onAddAppartementClick(batimentId) },
                         modifier = Modifier
                             .padding(16.dp)
                             .align(Alignment.BottomEnd),
                         content = {
-                            Icon(Icons.Default.Add, contentDescription = "Ajouter un appartement")
+                            Icon(
+                                Icons.Default.Add,
+                                contentDescription = "Ajouter un appartement"
+                            )
                         },
                         containerColor = MaterialTheme.colorScheme.primary
                     )
+
                 }
             }
         }

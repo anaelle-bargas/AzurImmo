@@ -13,7 +13,6 @@ import androidx.navigation.compose.NavHost
 import androidx.navigation.compose.composable
 import androidx.navigation.compose.rememberNavController
 import androidx.navigation.navArgument
-import bts.sio.azurimmo.views.AppFooter
 import bts.sio.azurimmo.views.AppHeader
 import bts.sio.azurimmo.views.AppNavigation
 import bts.sio.azurimmo.views.appartement.AppartementList
