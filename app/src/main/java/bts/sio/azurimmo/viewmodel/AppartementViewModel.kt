@@ -50,4 +50,23 @@ class AppartementViewModel : ViewModel(){
             }
         }
     }
+
+    fun addAppartement(appartement : Appartement){
+        viewModelScope.launch {
+            _isLoading.value=false
+            try {
+                val response = RetrofitInstance.api.addAppartement(appartement)
+                if(response.isSuccessful()){
+                    getAppartements()
+                }
+                else{
+                    _errorMessage.value="Erreur dnas la création d'un appartement ${response.message()}"
+                }
+            }catch (e:Exception){
+                _errorMessage.value="Erreur dans la création d'un appartement ${e.message}"
+            }finally{
+                _isLoading.value=false
+            }
+        }
+    }
 }

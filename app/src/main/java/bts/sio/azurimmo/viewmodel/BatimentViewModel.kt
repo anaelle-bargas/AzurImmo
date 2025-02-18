@@ -1,5 +1,6 @@
 package bts.sio.azurimmo.viewmodel
 
+import android.util.Log
 import androidx.compose.runtime.*
 import androidx.compose.runtime.mutableStateOf
 import bts.sio.azurimmo.model.Batiment
@@ -25,7 +26,7 @@ class BatimentViewModel : ViewModel() {
         getBatiments()
     }
 
-    private fun getBatiments(){
+    fun getBatiments(){
         viewModelScope.launch{
             _isLoading.value = true
             try {
@@ -60,7 +61,9 @@ class BatimentViewModel : ViewModel() {
         viewModelScope.launch {
             _isLoading.value=true
             try{
-                var response = RetrofitInstance.api.addBatiment(batiment)
+                Log.d("batimentadd", "Le batiment : ${batiment.toString()}")
+                val response = RetrofitInstance.api.addBatiment(batiment)
+                Log.d("bla", "La")
                 if(response.isSuccessful()){
                     getBatiments()
                 }

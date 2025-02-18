@@ -10,7 +10,9 @@ import androidx.navigation.NavType
 import androidx.navigation.compose.NavHost
 import androidx.navigation.compose.composable
 import androidx.navigation.navArgument
+import bts.sio.azurimmo.views.appartement.AppartementAdd
 import bts.sio.azurimmo.views.appartement.AppartementList
+import bts.sio.azurimmo.views.batiment.BatimentAdd
 import bts.sio.azurimmo.views.batiment.BatimentList
 import bts.sio.azurimmo.views.locataire.LocataireList
 
@@ -33,7 +35,9 @@ fun AppNavigation(navController: NavHostController, modifier: Modifier){
             if(batimentId!=null){
                 AppartementList(
                     batimentId =batimentId,
-                    onAddAppartementClick = {navController.navigate("add_appartement")}
+                    onAddAppartementClick = {batimentId->
+                        navController.navigate("add_appartement/$batimentId")
+                    }
                 )
                 Log.d("BatimentClik", "Batiment cliqué : $batimentId")
             }else{
@@ -49,6 +53,26 @@ fun AppNavigation(navController: NavHostController, modifier: Modifier){
 
         composable("appartement_list"){
             AppartementList(onAddAppartementClick = {navController.navigate(route = "add_appartement")})
+        }
+
+        composable("add_batiment"){
+            BatimentAdd(onBatimentAdd = {
+                navController.popBackStack()
+            })
+        }
+
+        composable("add_appartement/{idBatiment}", listOf(navArgument("idBatiment"){type=NavType.IntType})){
+            backStackEntry->
+            val idBatiment = backStackEntry.arguments?.getInt("idBatiment")
+            if(idBatiment != null){
+                AppartementAdd(
+                    onAddAppartement = {
+                        navController.popBackStack()
+                    },
+                    idBatiment = idBatiment
+                )
+            }
+
         }
 
     }

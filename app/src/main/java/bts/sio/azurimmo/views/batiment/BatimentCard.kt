@@ -32,7 +32,7 @@ fun BatimentCard(batiment: Batiment, onClick : (Int) -> Unit){
         Column(
             modifier = Modifier.padding(16.dp)
         ){
-            Text(text = batiment.adresse, style = MaterialTheme.typography.bodyLarge)
+            Text(text = batiment.adresse?:"Non rensigné", style = MaterialTheme.typography.bodyLarge)
             Text(text = batiment.ville?:"Non renseigné", style = MaterialTheme.typography.bodyMedium)
         }
     }
