@@ -1,5 +1,6 @@
 package bts.sio.azurimmo.views.appartement
 
+import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.Spacer
 import androidx.compose.foundation.layout.fillMaxWidth
@@ -9,6 +10,7 @@ import androidx.compose.foundation.text.KeyboardOptions
 import androidx.compose.material3.Button
 import androidx.compose.material3.DropdownMenu
 import androidx.compose.material3.DropdownMenuItem
+import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.Text
 import androidx.compose.material3.TextField
 import androidx.compose.runtime.Composable
@@ -37,6 +39,11 @@ fun AppartementAdd (
     var nb_pieces_original by remember { mutableStateOf("") }
     var surface by remember { mutableStateOf("") }
     var description by remember { mutableStateOf("") }
+
+    viewModelBatiment.getBatiments()
+    val batiments = viewModelBatiment.batiments.value
+    var expanded by remember { mutableStateOf(false) }
+    var batimentChoisi by remember { mutableStateOf(batiments.firstOrNull()) }
 
     Column (
         modifier = Modifier
@@ -75,18 +82,23 @@ fun AppartementAdd (
             keyboardOptions = KeyboardOptions(keyboardType = KeyboardType.Text)
         )
         Spacer(modifier = Modifier.height(16.dp))
-
         if (idBatiment == null) {
-            val batiments = listOf(viewModelBatiment.getBatiments())
-            var expanded by remember { mutableStateOf(false) }
-            var batimentChoisi by remember { mutableStateOf(batiments[0]) }
+
+            Text(
+                text = batimentChoisi?.adresse ?: "Sélectionner un bâtiment",
+                modifier = Modifier
+                    .clickable { expanded = true }
+                    .padding(8.dp)
+            )
             DropdownMenu(
                 expanded = expanded,
                 onDismissRequest = { expanded = false }
             ) {
                 batiments.forEach { batiment ->
                     DropdownMenuItem(
-                        text = { Text("${batiment.toString()}") },
+                        text = {
+                            Text("${batiment.ville} - ${batiment.adresse}", style = MaterialTheme.typography.bodyLarge)
+                        },
                         onClick = {
                             batimentChoisi = batiment
                             expanded = false
@@ -94,29 +106,30 @@ fun AppartementAdd (
                     )
                 }
             }
+
         }
-        if (idBatiment != null) {
-            Button(
-                onClick = {
-                    if (numero.isNotEmpty() && surface.isNotEmpty() && nb_pieces_original.isNotEmpty()) {
-                        val appartement = Appartement(
-                            id = 0,
-                            description = description,
-                            nbPiecesOriginal = nb_pieces_original.toInt(),
-                            numero = numero.toInt(),
-                            surface = surface.toDouble(),
-                            batiment = Batiment(id = idBatiment)
-                        )
-                        viewModel.addAppartement(appartement)
-                        onAddAppartement()
+
+        Button(
+            onClick = {
+                if (numero.isNotEmpty() && surface.isNotEmpty() && nb_pieces_original.isNotEmpty()) {
+                    val appartement = Appartement(
+                        id = 0,
+                        description = description,
+                        nbPiecesOriginal = nb_pieces_original.toInt(),
+                        numero = numero.toInt(),
+                        surface = surface.toDouble(),
+                        batiment = Batiment(id = (if(idBatiment!=null) idBatiment else batimentChoisi?.id) )
+                    )
+                    viewModel.addAppartement(appartement)
+                    onAddAppartement()
 //
-                    }
-                },
-                enabled = numero.isNotEmpty() && surface.isNotEmpty() && nb_pieces_original.isNotEmpty(),
-                modifier = Modifier.align(Alignment.End),
-            ) {
-                Text("Ajouter un appartement")
-            }
+                }
+            },
+            enabled = numero.isNotEmpty() && surface.isNotEmpty() && nb_pieces_original.isNotEmpty(),
+            modifier = Modifier.align(Alignment.End),
+        ) {
+            Text("Ajouter un appartement")
         }
+
     }
 }

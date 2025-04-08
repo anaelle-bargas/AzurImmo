@@ -23,7 +23,7 @@ class AppartementViewModel : ViewModel(){
         getAppartements()
     }
 
-    private fun getAppartements(){
+    fun getAppartements(){
         viewModelScope.launch{
             _isLoading.value = true
             try{

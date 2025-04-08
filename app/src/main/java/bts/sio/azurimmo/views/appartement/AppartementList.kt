@@ -49,8 +49,10 @@ fun AppartementList (
         if(batimentId!=null){
             viewModel.getAppartementsByBatimentId(batimentId)
             viewModelBat.getBatiment(batimentId)
-
+        }else{
+            viewModel.getAppartements()
         }
+
     }
 
     Box(modifier =Modifier.fillMaxSize()){
@@ -130,7 +132,7 @@ fun AppartementList (
                     }
                 }
 
-                if(batimentId!=null) {
+
 
                     FloatingActionButton(
                         onClick = { onAddAppartementClick(batimentId) },
@@ -146,7 +148,7 @@ fun AppartementList (
                         containerColor = MaterialTheme.colorScheme.primary
                     )
 
-                }
+
             }
         }
     }

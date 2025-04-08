@@ -53,6 +53,12 @@ fun AppNavigation(navController: NavHostController, modifier: Modifier){
             LocataireList(onAddLocataireClick = {navController.navigate("add_locataire")})
         }
 
+        composable("add_locataires"){
+            LocataireAdd(onLocataireAdd = {
+                navController.popBackStack()
+            })
+        }
+
         composable("appartement_list"){
             AppartementList(onAddAppartementClick = {navController.navigate(route = "add_appartement")})
         }

@@ -35,7 +35,7 @@ import androidx.lifecycle.viewmodel.compose.viewModel
 @Composable
 fun BatimentList(
     viewModel: BatimentViewModel =viewModel(),
-    onBatimentClick : (Int)->Unit,
+    onBatimentClick : (Int?)->Unit,
     onAddBatimentClick: ()->Unit
 ){
     val batiments = viewModel.batiments.value

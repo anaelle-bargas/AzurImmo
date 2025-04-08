@@ -15,7 +15,6 @@ import androidx.compose.runtime.remember
 import androidx.compose.runtime.setValue
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
-import androidx.compose.ui.text.style.LineHeightStyle
 import androidx.compose.ui.unit.dp
 import androidx.lifecycle.viewmodel.compose.viewModel
 import bts.sio.azurimmo.model.Batiment
@@ -49,7 +48,7 @@ fun BatimentAdd(
         Button(
             onClick = {
                 if(adresse.isNotBlank() && ville.isNotBlank()){
-                    val batiment = Batiment(id = 0, adresse=adresse, ville=ville)
+                    val batiment = Batiment(id = 0, adresse =adresse, ville =ville)
                     viewModel.addBatiment(batiment)
                     onBatimentAdd()
                 }

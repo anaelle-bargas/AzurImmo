@@ -19,7 +19,7 @@ import androidx.compose.ui.unit.dp
 import bts.sio.azurimmo.model.Batiment
 
 @Composable
-fun BatimentCard(batiment: Batiment, onClick : (Int) -> Unit){
+fun BatimentCard(batiment: Batiment, onClick : (Int?) -> Unit){
     Card(
         modifier = Modifier
             .fillMaxWidth()
