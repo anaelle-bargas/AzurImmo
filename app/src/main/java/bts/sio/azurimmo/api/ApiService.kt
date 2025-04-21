@@ -4,8 +4,10 @@ import bts.sio.azurimmo.model.Appartement
 import bts.sio.azurimmo.model.Associe
 import bts.sio.azurimmo.model.Batiment
 import bts.sio.azurimmo.model.Contrat
+import bts.sio.azurimmo.model.Intervenant
 import bts.sio.azurimmo.model.Intervention
 import bts.sio.azurimmo.model.Locataire
+import bts.sio.azurimmo.model.TypeIntervention
 import retrofit2.Response
 import retrofit2.http.Body
 import retrofit2.http.GET
@@ -32,6 +34,12 @@ interface ApiService{
     @GET("api/interventions/")
     suspend fun getInterventions() : List<Intervention>
 
+    @GET("api/type_interventions/")
+    suspend fun getTypeInterventions() : List<TypeIntervention>
+
+    @GET("api/intervenants/")
+    suspend fun getIntervenants() : List<Intervenant>
+
     @GET("api/appartements/batiment/{batimentId}")
     suspend fun getAppartementsByBatimentId(@Path("batimentId") batimentId:Int) : List<Appartement>
 
@@ -44,5 +52,17 @@ interface ApiService{
 
     @POST("api/appartements/")
     suspend fun addAppartement(@Body appartement : Appartement) : Response<Appartement>
+
+    @POST("api/locataires/")
+    suspend fun addLocataire(@Body locataire : Locataire) : Response<Locataire>
+
+    @POST("api/interventions/")
+    suspend fun addIntervention(@Body intervention: Intervention) : Response<Intervention>
+
+    @POST("api/intervenants/")
+    suspend fun addIntervenant(@Body intervenant: Intervenant) : Response<Intervenant>
+
+    @POST("api/type_interventions/")
+    suspend fun addTypeIntervention(@Body typeIntervention: TypeIntervention) : Response<TypeIntervention>
 
 }

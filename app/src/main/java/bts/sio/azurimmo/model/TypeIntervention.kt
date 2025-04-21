@@ -1,5 +1,6 @@
 package bts.sio.azurimmo.model
 
 data class TypeIntervention(
-    val libelle:String
+    val id:Int,
+    val libelle:String?=null
 )

@@ -6,13 +6,12 @@ import androidx.compose.runtime.mutableStateOf
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import bts.sio.azurimmo.api.RetrofitInstance
-import bts.sio.azurimmo.model.Intervention
-import bts.sio.azurimmo.model.Locataire
+import bts.sio.azurimmo.model.TypeIntervention
 import kotlinx.coroutines.launch
 
-class InterventionViewModel:ViewModel() {
-    private val _interventions= mutableStateOf<List<Intervention>>(emptyList())
-    val interventions:State<List<Intervention>> = _interventions
+class TypeInterventionViewModel:ViewModel() {
+    private val _typeIntervention= mutableStateOf<List<TypeIntervention>>(emptyList())
+    val typeIntervention:State<List<TypeIntervention>> = _typeIntervention
 
     private val _isLoading = mutableStateOf(false)
     val isLoading:State<Boolean> = _isLoading
@@ -21,17 +20,17 @@ class InterventionViewModel:ViewModel() {
     val errorMessage:State<String?> = _errorMessage
 
     init {
-        getIntervention()
+        getTypeInterventions()
     }
 
-    private fun getIntervention(){
+    fun getTypeInterventions(){
         viewModelScope.launch {
             _isLoading.value=true
             try {
-                val response = RetrofitInstance.api.getInterventions()
-                _interventions.value = response
+                val response = RetrofitInstance.api.getTypeInterventions()
+                _typeIntervention.value = response
             }catch (e:Exception){
-                _errorMessage.value="Erreur dans la récupération des intervention: ${e.message}"
+                _errorMessage.value="Erreur dans la récupération des types d'intervention: ${e.message}"
             }finally {
                 _isLoading.value=false
             }
@@ -39,20 +38,20 @@ class InterventionViewModel:ViewModel() {
     }
 
 
-    fun addIntervention(intervention: Intervention){
+    fun addTypeIntervention(typeIntervention: TypeIntervention){
         viewModelScope.launch {
             _isLoading.value=true
             try{
-                Log.d("intervention", "L'intervention' : ${intervention.toString()}")
-                val response = RetrofitInstance.api.addIntervention(intervention)
+                Log.d("typeIntervention", "Le type d'intervention' : ${typeIntervention.toString()}")
+                val response = RetrofitInstance.api.addTypeIntervention(typeIntervention)
                 if(response.isSuccessful()){
-                    getIntervention()
+                    getTypeInterventions()
                 }
                 else{
-                    _errorMessage.value="Erreur dans l'ajout d'une intervention ${response.message()}"
+                    _errorMessage.value="Erreur dans l'ajout d'un type d'intervention ${response.message()}"
                 }
             }catch (e:Exception){
-                _errorMessage.value="Erreur dans l'ajout d'une intervention : ${e.message}"
+                _errorMessage.value="Erreur dans l'ajout d'un type d'intervention : ${e.message}"
             }finally {
                 _isLoading.value=false
             }

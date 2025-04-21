@@ -10,17 +10,24 @@ import androidx.compose.foundation.layout.widthIn
 import androidx.compose.foundation.lazy.LazyColumn
 import androidx.compose.foundation.lazy.items
 import androidx.compose.foundation.shape.RoundedCornerShape
+import androidx.compose.material.icons.Icons
+import androidx.compose.material.icons.filled.Add
 import androidx.compose.material3.Button
 import androidx.compose.material3.CircularProgressIndicator
+import androidx.compose.material3.FloatingActionButton
+import androidx.compose.material3.Icon
 import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
+import androidx.compose.runtime.LaunchedEffect
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.text.font.FontWeight
+import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.unit.dp
 import androidx.lifecycle.viewmodel.compose.viewModel
 import bts.sio.azurimmo.viewmodel.LocataireViewModel
+import bts.sio.azurimmo.views.batiment.BatimentCard
 
 @Composable
 fun LocataireList(
@@ -31,43 +38,51 @@ fun LocataireList(
     val errorMessage = viewModel.errorMessage.value
     val isLoading = viewModel.isLoading.value
 
-
-    Box(modifier = Modifier.fillMaxSize()){
-
-        when {
-            isLoading == true -> {
-                CircularProgressIndicator(modifier = Modifier.align(Alignment.Center))
+    LaunchedEffect(Unit) {
+        viewModel.getLocataires()
+    }
+    Box(modifier=Modifier.fillMaxSize()){
+        when{
+            isLoading -> {
+                CircularProgressIndicator(modifier=Modifier.align(Alignment.Center))
             }
-            errorMessage != null ->{
-                Text(text = "Erreur : ${errorMessage}", modifier = Modifier.align(Alignment.Center), color = MaterialTheme.colorScheme.error)
+            errorMessage != null -> {
+                Text(
+                    text=errorMessage ?:"Erreur Inconnue",
+                    modifier= Modifier
+                        .align(Alignment.Center)
+                        .padding(16.dp),
+                    color=MaterialTheme.colorScheme.error
+                )
             }
-
-            else->{
-                Column (
-                    modifier = Modifier
-                        .fillMaxWidth()
-                ) {
-                    Button(
-                        modifier = Modifier
-                            .align(Alignment.CenterHorizontally)
-                            .padding(16.dp),
-                        onClick = onAddLocataireClick,
-                        shape = RoundedCornerShape(16.dp)
-
-                    ) {
-                        Text("Ajouter un locataire")
-                    }
-
-                    Text("Liste des locataires", modifier = Modifier.padding(8.dp), style = MaterialTheme.typography.bodyLarge.copy(fontWeight = FontWeight.Bold, color = MaterialTheme.colorScheme.primary))
-
+            else -> {
+                Column  {
                     LazyColumn {
-                        items(locataires) { locataire ->
-                            LocataireCard(locataire)
+                        item{
+                            Text(
+                                text = "Liste des locataires",
+                                textAlign = TextAlign.Center,
+                                style = MaterialTheme.typography.titleMedium.copy(fontWeight = FontWeight.Bold),
+                                color = MaterialTheme.colorScheme.primary,
+                                modifier = Modifier
+                                    .padding(16.dp)
+                                    .fillMaxWidth()
+                            )
+                        }
+                        items(locataires){ locataire ->
+                            LocataireCard(locataire=locataire)
                         }
                     }
                 }
-            }
 
+                FloatingActionButton(
+                    onClick = {onAddLocataireClick()},
+                    modifier = Modifier.align(Alignment.BottomEnd).padding(16.dp),
+                    containerColor = MaterialTheme.colorScheme.primary,
+                    content = { Icon(Icons.Default.Add, contentDescription = "Ajouter un batiment")}
+                )
+            }
         }
     }
 }
+

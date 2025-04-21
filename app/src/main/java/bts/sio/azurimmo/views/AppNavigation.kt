@@ -16,6 +16,7 @@ import bts.sio.azurimmo.views.batiment.BatimentAdd
 import bts.sio.azurimmo.views.batiment.BatimentList
 import bts.sio.azurimmo.views.contrat.InterventionList
 import bts.sio.azurimmo.views.intervention.InterventionAdd
+import bts.sio.azurimmo.views.locataire.LocataireAdd
 import bts.sio.azurimmo.views.locataire.LocataireList
 
 @Composable
@@ -50,14 +51,11 @@ fun AppNavigation(navController: NavHostController, modifier: Modifier){
 
 
         composable("locataires_list"){
-            LocataireList(onAddLocataireClick = {navController.navigate("add_locataire")})
+            LocataireList(
+                onAddLocataireClick = {navController.navigate("add_locataire")}
+            )
         }
 
-        composable("add_locataires"){
-            LocataireAdd(onLocataireAdd = {
-                navController.popBackStack()
-            })
-        }
 
         composable("appartement_list"){
             AppartementList(onAddAppartementClick = {navController.navigate(route = "add_appartement")})
@@ -77,6 +75,11 @@ fun AppNavigation(navController: NavHostController, modifier: Modifier){
             })
         }
 
+        composable("add_locataire"){
+            LocataireAdd(onAddLocataire = {
+                navController.popBackStack()
+            })
+        }
         composable("add_appartement/{idBatiment}", listOf(navArgument("idBatiment"){type=NavType.IntType})){
             backStackEntry->
             val idBatiment = backStackEntry.arguments?.getInt("idBatiment")

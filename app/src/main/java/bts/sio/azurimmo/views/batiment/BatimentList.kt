@@ -61,10 +61,8 @@ fun BatimentList(
             }
             else -> {
                 Column  {
-
                     LazyColumn {
                         item{
-
                             Text(
                                 text = "Liste des bâtiments",
                                 textAlign = TextAlign.Center,

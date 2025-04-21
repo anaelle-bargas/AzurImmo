@@ -1,5 +1,6 @@
 package bts.sio.azurimmo.viewmodel
 
+import android.util.Log
 import androidx.compose.runtime.State
 import androidx.compose.runtime.mutableStateOf
 import androidx.lifecycle.ViewModel
@@ -30,6 +31,26 @@ class LocataireViewModel : ViewModel() {
                 _locataires.value = response
             }catch (e:Exception){
                 _errorMessage.value = "Erreur dans la réception des locataires : ${e.message}"
+            }finally {
+                _isLoading.value=false
+            }
+        }
+    }
+
+    fun addLocataire(locataire: Locataire){
+        viewModelScope.launch {
+            _isLoading.value=true
+            try{
+                Log.d("locataire", "Le locataire : ${locataire.toString()}")
+                val response = RetrofitInstance.api.addLocataire(locataire)
+                if(response.isSuccessful()){
+                    getLocataires()
+                }
+                else{
+                    _errorMessage.value="Erreur dans l'ajout d'un locataire ${response.message()}"
+                }
+            }catch (e:Exception){
+                _errorMessage.value="Erreur dans l'ajout d'un locataire : ${e.message}"
             }finally {
                 _isLoading.value=false
             }

@@ -1,16 +1,12 @@
 package bts.sio.azurimmo.views.locataire
 
-import android.os.Build
-import androidx.annotation.RequiresApi
+import android.text.format.DateFormat
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.Spacer
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.layout.padding
-import androidx.compose.foundation.shape.RoundedCornerShape
-import androidx.compose.foundation.text2.input.TextFieldCharSequence
 import androidx.compose.material3.Button
-import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.Text
 import androidx.compose.material3.TextField
 import androidx.compose.runtime.Composable
@@ -23,10 +19,10 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.unit.dp
 import androidx.lifecycle.viewmodel.compose.viewModel
 import bts.sio.azurimmo.model.Locataire
-import bts.sio.azurimmo.toLocalDate
 import bts.sio.azurimmo.viewmodel.LocataireViewModel
+import java.sql.Date
+import java.text.SimpleDateFormat
 
-@RequiresApi(Build.VERSION_CODES.O)
 @Composable
 fun LocataireAdd(
     onAddLocataire : ()->Unit,
@@ -39,7 +35,9 @@ fun LocataireAdd(
     var email by remember { mutableStateOf("") }
     var telephone by remember { mutableStateOf("") }
 
-    Column(modifier = Modifier.fillMaxWidth().padding(16.dp)) {
+    Column(modifier = Modifier
+        .fillMaxWidth()
+        .padding(16.dp)) {
         TextField(
             value = nom,
             onValueChange = {nom=it},
@@ -83,9 +81,13 @@ fun LocataireAdd(
         )
         Button(
             onClick = {
-                val date_naissance_formatted=date_naissance.toLocalDate()
-                if(date_naissance_formatted!=null && lieu_naissance.isNotEmpty() && nom.isNotEmpty() && prenom.isNotEmpty() && email.isNotEmpty() && telephone.isNotEmpty()){
-                    var locataire = Locataire(id=0, nom=nom, prenom = prenom, date_naissance = date_naissance_formatted, lieu_naissance=lieu_naissance, email=email, telephone=telephone)
+
+                if(date_naissance!=null && lieu_naissance.isNotEmpty() && nom.isNotEmpty() && prenom.isNotEmpty() && email.isNotEmpty() && telephone.isNotEmpty()){
+                    val sdf = SimpleDateFormat("yyyy-MM-dd")
+                    val formattedDate = sdf.format(java.util.Date(date_naissance))
+                    val locataire = Locataire(id=0, nom=nom, prenom = prenom, date_naissance = formattedDate, lieu_naissance=lieu_naissance, email=email, telephone=telephone)
+                    viewModel.addLocataire(locataire)
+                    onAddLocataire()
                 }
             },
             enabled = date_naissance.isNotEmpty() && lieu_naissance.isNotEmpty() && nom.isNotEmpty() && prenom.isNotEmpty() && email.isNotEmpty() && telephone.isNotEmpty(),
