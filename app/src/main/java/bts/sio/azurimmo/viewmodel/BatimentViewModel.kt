@@ -77,4 +77,24 @@ class BatimentViewModel : ViewModel() {
             }
         }
     }
+
+
+    fun delBatiment(batimentId: Int){
+        viewModelScope.launch {
+            _isLoading.value=true
+            try{
+                Log.d("batimentdel", "Le batiment : ${batimentId}")
+                val response = RetrofitInstance.api.delBatiment(batimentId)
+                if(response.isSuccessful()){
+                    getBatiments()
+                } else{
+                    _errorMessage.value="Erreur dans la suppression d'un batiment ${response.message()}"
+                }
+            }catch (e:Exception){
+                _errorMessage.value="Erreur dans la suppression d'un batiment : ${e.message}"
+            }finally {
+                _isLoading.value=false
+            }
+        }
+    }
 }

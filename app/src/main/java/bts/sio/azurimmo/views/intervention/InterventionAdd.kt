@@ -1,5 +1,6 @@
 package bts.sio.azurimmo.views.intervention
 
+import android.util.Log
 import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.Spacer
@@ -13,6 +14,7 @@ import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.Text
 import androidx.compose.material3.TextField
 import androidx.compose.runtime.Composable
+import androidx.compose.runtime.LaunchedEffect
 import androidx.compose.runtime.getValue
 import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.remember
@@ -34,50 +36,57 @@ import java.text.SimpleDateFormat
 
 @Composable
 fun InterventionAdd(
-    onAddIntervention : ()->Unit,
+    onAddIntervention: () -> Unit,
     viewModel: InterventionViewModel = viewModel(),
-    appartementViewModel : AppartementViewModel = viewModel(),
-    typeInterventionViewModel: TypeInterventionViewModel =viewModel(),
+    appartementViewModel: AppartementViewModel = viewModel(),
+    typeInterventionViewModel: TypeInterventionViewModel = viewModel(),
     intervenantViewModel: IntervenantViewModel = viewModel()
 ) {
     var description by remember { mutableStateOf("") }
     var date by remember { mutableStateOf("") }
-    var intervenant by remember { mutableStateOf("") }
-    var typeIntervention by remember { mutableStateOf("") }
 
+    LaunchedEffect(Unit) {
+        appartementViewModel.getAppartements()
+        intervenantViewModel.getIntervenants()
+        typeInterventionViewModel.getTypeInterventions()
+    }
 
-    appartementViewModel.getAppartements()
     val appartements = appartementViewModel.appartements.value
-    var expanded by remember { mutableStateOf(false) }
-    var appartementChoisi by remember { mutableStateOf(appartements.firstOrNull()) }
-
-    intervenantViewModel.getIntervenants()
     val intervenants = intervenantViewModel.intervenants.value
-    var intervenantChoisi by remember { mutableStateOf(intervenants.firstOrNull()) }
+    val typeInterventions = typeInterventionViewModel.typeInterventions.value
+    Log.d("typeInterventions", "Les type d'intervention dans intervention add' : ${typeInterventions.toString()}")
+    Log.d("typeInterventions", "Les type d'intervention dans intervention add' : ${appartements.toString()}")
 
-    typeInterventionViewModel.getTypeInterventions()
-    val typeInterventions = typeInterventionViewModel.typeIntervention.value
+
+    var expanded by remember { mutableStateOf(false) }
+    var expanded2 by remember { mutableStateOf(false) }
+    var expanded3 by remember { mutableStateOf(false) }
+
+    var appartementChoisi by remember { mutableStateOf(appartements.firstOrNull()) }
+    var intervenantChoisi by remember { mutableStateOf(intervenants.firstOrNull()) }
     var typeInterventionChoisi by remember { mutableStateOf(typeInterventions.firstOrNull()) }
 
-    Column(modifier = Modifier
-        .fillMaxWidth()
-        .padding(16.dp)) {
+    Column(
+        modifier = Modifier
+            .fillMaxWidth()
+            .padding(16.dp)
+    ) {
         TextField(
             value = description,
-            onValueChange = {description=it},
+            onValueChange = { description = it },
             label = { Text("Description") },
             modifier = Modifier.fillMaxWidth()
         )
         Spacer(modifier = Modifier.height(16.dp))
         TextField(
-            value=date,
-            onValueChange = {date=it},
+            value = date,
+            onValueChange = { date = it },
             label = { Text("Date") },
             modifier = Modifier.fillMaxWidth()
         )
-        Spacer(modifier= Modifier.height(16.dp))
+        Spacer(modifier = Modifier.height(16.dp))
         Text(
-            text = appartementChoisi?.numero.toString() ?: "Sélectionner un appartement",
+            text = appartementChoisi?.numero?.toString() ?: "Sélectionner un appartement",
             modifier = Modifier
                 .clickable { expanded = true }
                 .padding(8.dp)
@@ -89,7 +98,10 @@ fun InterventionAdd(
             appartements.forEach { appartement ->
                 DropdownMenuItem(
                     text = {
-                        Text("${appartement.batiment?.adresse} - ${appartement.batiment?.ville} - ${appartement.numero}", style = MaterialTheme.typography.bodyLarge)
+                        Text(
+                            "${appartement.batiment?.adresse} - ${appartement.batiment?.ville} - ${appartement.numero}",
+                            style = MaterialTheme.typography.bodyLarge
+                        )
                     },
                     onClick = {
                         appartementChoisi = appartement
@@ -98,16 +110,16 @@ fun InterventionAdd(
                 )
             }
         }
-        Spacer(modifier= Modifier.height(16.dp))
+        Spacer(modifier = Modifier.height(16.dp))
         Text(
             text = intervenantChoisi?.nom ?: "Sélectionner un intervenant",
             modifier = Modifier
-                .clickable { expanded = true }
+                .clickable { expanded2 = true }
                 .padding(8.dp)
         )
         DropdownMenu(
-            expanded = expanded,
-            onDismissRequest = { expanded = false }
+            expanded = expanded2,
+            onDismissRequest = { expanded2 = false }
         ) {
             intervenants.forEach { intervenant ->
                 DropdownMenuItem(
@@ -116,30 +128,33 @@ fun InterventionAdd(
                     },
                     onClick = {
                         intervenantChoisi = intervenant
-                        expanded = false
+                        expanded2 = false
                     }
                 )
             }
         }
-        Spacer(modifier= Modifier.height(16.dp))
+        Spacer(modifier = Modifier.height(16.dp))
         Text(
             text = typeInterventionChoisi?.libelle ?: "Sélectionner un type d'intervention",
             modifier = Modifier
-                .clickable { expanded = true }
+                .clickable { expanded3 = true }
                 .padding(8.dp)
         )
         DropdownMenu(
-            expanded = expanded,
-            onDismissRequest = { expanded = false }
+            expanded = expanded3,
+            onDismissRequest = { expanded3 = false }
         ) {
             typeInterventions.forEach { typeIntervention ->
                 DropdownMenuItem(
                     text = {
-                        Text("${typeIntervention.libelle}", style = MaterialTheme.typography.bodyLarge)
+                        Text(
+                            "${typeIntervention.libelle}",
+                            style = MaterialTheme.typography.bodyLarge
+                        )
                     },
                     onClick = {
                         typeInterventionChoisi = typeIntervention
-                        expanded = false
+                        expanded3 = false
                     }
                 )
             }
@@ -147,23 +162,25 @@ fun InterventionAdd(
         Button(
             onClick = {
 
-                if(description.isNotEmpty() && appartementChoisi!=null && typeIntervention.isNotEmpty() && intervenant.isNotEmpty() && date.isNotEmpty()){
+                if (description.isNotEmpty() && appartementChoisi != null && typeInterventionChoisi!= null && intervenantChoisi!=null && date.isNotEmpty()) {
                     val sdf = SimpleDateFormat("yyyy-MM-dd")
                     val formattedDate = sdf.format(java.util.Date(date))
                     val intervention = Intervention(
-                        id=0,
-                        description=description,
+                        id = 0,
+                        description = description,
                         date = formattedDate,
                         appartement = Appartement(id = appartementChoisi!!.id),
-                        intervenant= Intervenant(id=intervenantChoisi!!.id),
-                        typeIntervention= TypeIntervention(id=typeInterventionChoisi!!.id)
+                        intervenant = Intervenant(id = intervenantChoisi!!.id),
+                        typeIntervention = TypeIntervention(id = typeInterventionChoisi!!.id)
                     )
                     viewModel.addIntervention(intervention)
                     onAddIntervention()
+                    Log.d("Intervention", "Les type d'intervention dans intervention add' : ${intervention.toString()}")
                 }
+
             },
-            enabled = date.isNotEmpty() && description.isNotEmpty() && appartementChoisi!=null && intervenant!=null && typeIntervention!=null,
-            modifier= Modifier.align(Alignment.End),
+            enabled = date.isNotEmpty() && description.isNotEmpty() && appartementChoisi != null && intervenantChoisi != null && typeInterventionChoisi != null,
+            modifier = Modifier.align(Alignment.End),
 
             ) {
             Text("Ajouter une intervention")

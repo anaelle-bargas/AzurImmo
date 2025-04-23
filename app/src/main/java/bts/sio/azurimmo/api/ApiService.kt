@@ -10,6 +10,7 @@ import bts.sio.azurimmo.model.Locataire
 import bts.sio.azurimmo.model.TypeIntervention
 import retrofit2.Response
 import retrofit2.http.Body
+import retrofit2.http.DELETE
 import retrofit2.http.GET
 import retrofit2.http.POST
 import retrofit2.http.Path
@@ -64,5 +65,14 @@ interface ApiService{
 
     @POST("api/type_interventions/")
     suspend fun addTypeIntervention(@Body typeIntervention: TypeIntervention) : Response<TypeIntervention>
+
+    @DELETE("api/batiments/{batimentId}")
+    suspend fun delBatiment(@Path("batimentId") batimentId:Int) : Response<Unit>
+
+    @DELETE("api/locataires/{locataireId}")
+    suspend fun delLocataire(@Path("locataireId") locataireId:Int) : Response<Unit>
+
+    @DELETE("api/appartements/{appartementId}")
+    suspend fun delAppartement(@Path("appartementId") appartementId:Int) : Response<Unit>
 
 }

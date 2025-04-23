@@ -1,5 +1,6 @@
 package bts.sio.azurimmo.viewmodel
 
+import android.util.Log
 import androidx.compose.runtime.State
 import androidx.compose.runtime.mutableStateOf
 import androidx.lifecycle.ViewModel
@@ -65,6 +66,26 @@ class AppartementViewModel : ViewModel(){
             }catch (e:Exception){
                 _errorMessage.value="Erreur dans la création d'un appartement ${e.message}"
             }finally{
+                _isLoading.value=false
+            }
+        }
+    }
+
+
+    fun delAppartement(appartementId: Int){
+        viewModelScope.launch {
+            _isLoading.value=true
+            try{
+                Log.d("appartementId", "Le appartementId : ${appartementId}")
+                val response = RetrofitInstance.api.delAppartement(appartementId)
+                if(response.isSuccessful()){
+                    getAppartements()
+                } else{
+                    _errorMessage.value="Erreur dans la suppression d'un appartement ${response.message()}"
+                }
+            }catch (e:Exception){
+                _errorMessage.value="Erreur dans la suppression d'un appartement : ${e.message}"
+            }finally {
                 _isLoading.value=false
             }
         }

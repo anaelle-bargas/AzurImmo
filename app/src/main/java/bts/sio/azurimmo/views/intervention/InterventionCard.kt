@@ -26,13 +26,13 @@ fun InterventionCard(intervention: Intervention){
         shape = RoundedCornerShape(8.dp)
     ) {
         Column(modifier = Modifier.padding(8.dp)) {
-            Text(text="Appartement "+intervention.appartement.numero, style=MaterialTheme.typography.labelLarge)
-            Text(text="Adresse : "+intervention.appartement.batiment.adresse, style = MaterialTheme.typography.bodyMedium)
-            Text(text="Ville : "+intervention.appartement.batiment.ville, style = MaterialTheme.typography.bodyMedium)
-            Text(text="Date : "+ SimpleDateFormat("dd/MM/yyyy", Locale.getDefault()).format(intervention.date), style = MaterialTheme.typography.bodyMedium)
-            Text(text="Intervenant : "+intervention.intervenant.nom, style = MaterialTheme.typography.bodyMedium)
-            Text(text="Type : "+intervention.typeIntervention.libelle, style=MaterialTheme.typography.bodyMedium)
-            Text(text = "Description : "+intervention.description, style = MaterialTheme.typography.bodyMedium)
+            Text(text = "Description : "+intervention.description, style = MaterialTheme.typography.labelLarge)
+            Text(text="Appartement "+intervention.appartement?.numero, style=MaterialTheme.typography.bodyMedium)
+            Text(text="Adresse : "+intervention.appartement?.batiment?.adresse, style = MaterialTheme.typography.bodyMedium)
+            Text(text="Ville : "+intervention.appartement?.batiment?.ville, style = MaterialTheme.typography.bodyMedium)
+            Text(text="Date : "+ intervention.date, style = MaterialTheme.typography.bodyMedium)
+            Text(text="Intervenant : "+intervention.intervenant?.nom, style = MaterialTheme.typography.bodyMedium)
+            Text(text="Type : "+intervention.typeIntervention?.libelle, style=MaterialTheme.typography.bodyMedium)
 
         }
     }

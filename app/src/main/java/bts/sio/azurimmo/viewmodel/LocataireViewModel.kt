@@ -56,4 +56,23 @@ class LocataireViewModel : ViewModel() {
             }
         }
     }
+
+    fun delLocataire(locataireId: Int){
+        viewModelScope.launch {
+            _isLoading.value=true
+            try{
+                Log.d("locataireId", "Le locataireId : ${locataireId}")
+                val response = RetrofitInstance.api.delLocataire(locataireId)
+                if(response.isSuccessful()){
+                    getLocataires()
+                } else{
+                    _errorMessage.value="Erreur dans la suppression d'un locataire ${response.message()}"
+                }
+            }catch (e:Exception){
+                _errorMessage.value="Erreur dans la suppression d'un locataire : ${e.message}"
+            }finally {
+                _isLoading.value=false
+            }
+        }
+    }
 }

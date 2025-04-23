@@ -15,6 +15,7 @@ import androidx.compose.foundation.rememberScrollState
 import androidx.compose.foundation.verticalScroll
 import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.filled.Add
+import androidx.compose.material.icons.filled.Delete
 import androidx.compose.material3.Button
 import androidx.compose.material3.CircularProgressIndicator
 import androidx.compose.material3.FloatingActionButton
@@ -36,7 +37,8 @@ import androidx.lifecycle.viewmodel.compose.viewModel
 fun BatimentList(
     viewModel: BatimentViewModel =viewModel(),
     onBatimentClick : (Int?)->Unit,
-    onAddBatimentClick: ()->Unit
+    onAddBatimentClick: ()->Unit,
+    onDeleteBatimentClick : ()->Unit
 ){
     val batiments = viewModel.batiments.value
     val isLoading = viewModel.isLoading.value
@@ -78,7 +80,12 @@ fun BatimentList(
                         }
                     }
                 }
-
+                FloatingActionButton(
+                    onClick = {onDeleteBatimentClick()},
+                    modifier = Modifier.align(Alignment.BottomEnd).padding(vertical = 85.dp, horizontal = 16.dp),
+                    containerColor = MaterialTheme.colorScheme.primary,
+                    content = { Icon(Icons.Default.Delete, contentDescription = "Supprimer un batiment")}
+                )
                 FloatingActionButton(
                     onClick = {onAddBatimentClick()},
                     modifier = Modifier.align(Alignment.BottomEnd).padding(16.dp),

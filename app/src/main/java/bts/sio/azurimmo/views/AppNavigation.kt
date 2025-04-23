@@ -11,9 +11,12 @@ import androidx.navigation.compose.NavHost
 import androidx.navigation.compose.composable
 import androidx.navigation.navArgument
 import bts.sio.azurimmo.views.appartement.AppartementAdd
+import bts.sio.azurimmo.views.appartement.AppartementDel
 import bts.sio.azurimmo.views.appartement.AppartementList
 import bts.sio.azurimmo.views.batiment.BatimentAdd
+import bts.sio.azurimmo.views.batiment.BatimentDel
 import bts.sio.azurimmo.views.batiment.BatimentList
+import bts.sio.azurimmo.views.locataire.LocataireDel
 import bts.sio.azurimmo.views.contrat.InterventionList
 import bts.sio.azurimmo.views.intervention.InterventionAdd
 import bts.sio.azurimmo.views.locataire.LocataireAdd
@@ -28,7 +31,8 @@ fun AppNavigation(navController: NavHostController, modifier: Modifier){
                 onBatimentClick={ batimentId ->
                     navController.navigate("batiment_appartements_list/$batimentId")
                 },
-                onAddBatimentClick = {navController.navigate("add_batiment")}
+                onAddBatimentClick = {navController.navigate("add_batiment")},
+                onDeleteBatimentClick = {navController.navigate("del_batiment")}
             )
         }
 
@@ -40,6 +44,9 @@ fun AppNavigation(navController: NavHostController, modifier: Modifier){
                     batimentId =batimentId,
                     onAddAppartementClick = {batimentId->
                         navController.navigate("add_appartement/$batimentId")
+                    },
+                    onDeleteAppartementClick = {batimentId->
+                        navController.navigate("del_appartement/$batimentId")
                     }
                 )
                 Log.d("BatimentClik", "Batiment cliqué : $batimentId")
@@ -52,13 +59,17 @@ fun AppNavigation(navController: NavHostController, modifier: Modifier){
 
         composable("locataires_list"){
             LocataireList(
-                onAddLocataireClick = {navController.navigate("add_locataire")}
+                onAddLocataireClick = {navController.navigate("add_locataire")},
+                onDeleteLocataireClick = {navController.navigate("del_locataire")}
             )
         }
 
 
         composable("appartement_list"){
-            AppartementList(onAddAppartementClick = {navController.navigate(route = "add_appartement")})
+            AppartementList(
+                onAddAppartementClick = {navController.navigate(route = "add_appartement") },
+                onDeleteAppartementClick = {navController.navigate(route="del_appartement")}
+            )
         }
 
         composable("interventions_list"){
@@ -66,7 +77,9 @@ fun AppNavigation(navController: NavHostController, modifier: Modifier){
         }
 
         composable("add_intervention"){
-            InterventionAdd()
+            InterventionAdd(onAddIntervention = {
+                navController.popBackStack()
+            })
         }
 
         composable("add_batiment"){
@@ -102,6 +115,31 @@ fun AppNavigation(navController: NavHostController, modifier: Modifier){
         }
 
 
+        composable("del_batiment"){
+            BatimentDel(
+                onDelBatiment = { navController.popBackStack()}
+            )
+        }
 
+        composable("del_locataire"){
+            LocataireDel(
+                onDelLocataire = { navController.popBackStack()}
+            )
+        }
+
+        composable("del_appartement/{idBatiment}", listOf(navArgument("idBatiment"){type=NavType.IntType})){
+            backStackEntry->
+            val idBatiment = backStackEntry.arguments?.getInt("idBatiment")
+            AppartementDel(
+                onDelAppartement = { navController.popBackStack()},
+                idBatiment=idBatiment
+            )
+        }
+
+        composable("del_appartement"){
+            AppartementDel(
+                onDelAppartement = { navController.popBackStack()}
+            )
+        }
     }
 }

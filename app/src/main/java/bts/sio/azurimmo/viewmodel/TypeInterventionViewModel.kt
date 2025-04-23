@@ -10,8 +10,8 @@ import bts.sio.azurimmo.model.TypeIntervention
 import kotlinx.coroutines.launch
 
 class TypeInterventionViewModel:ViewModel() {
-    private val _typeIntervention= mutableStateOf<List<TypeIntervention>>(emptyList())
-    val typeIntervention:State<List<TypeIntervention>> = _typeIntervention
+    private val _typeInterventions= mutableStateOf<List<TypeIntervention>>(emptyList())
+    val typeInterventions:State<List<TypeIntervention>> = _typeInterventions
 
     private val _isLoading = mutableStateOf(false)
     val isLoading:State<Boolean> = _isLoading
@@ -28,7 +28,7 @@ class TypeInterventionViewModel:ViewModel() {
             _isLoading.value=true
             try {
                 val response = RetrofitInstance.api.getTypeInterventions()
-                _typeIntervention.value = response
+                _typeInterventions.value = response
             }catch (e:Exception){
                 _errorMessage.value="Erreur dans la récupération des types d'intervention: ${e.message}"
             }finally {

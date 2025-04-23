@@ -28,7 +28,7 @@ fun LocataireCard(locataire:Locataire) {
         Column (modifier = Modifier.padding(8.dp)){
             Text(text = locataire.nom+" "+locataire.prenom, style = MaterialTheme.typography.bodyLarge)
             Text(text="Date de naissance: "+ locataire.date_naissance, style=MaterialTheme.typography.bodyMedium)
-            Text(text = locataire.lieu_naissance, style=MaterialTheme.typography.bodySmall)
+            Text(text = locataire.lieu_naissance?:"Inconnue", style=MaterialTheme.typography.bodySmall)
         }
     }
 }

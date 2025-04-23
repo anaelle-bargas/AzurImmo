@@ -12,6 +12,7 @@ import androidx.compose.foundation.lazy.items
 import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.filled.Add
+import androidx.compose.material.icons.filled.Delete
 import androidx.compose.material3.Button
 import androidx.compose.material3.CircularProgressIndicator
 import androidx.compose.material3.FloatingActionButton
@@ -32,7 +33,8 @@ import bts.sio.azurimmo.views.batiment.BatimentCard
 @Composable
 fun LocataireList(
     viewModel: LocataireViewModel = viewModel(),
-    onAddLocataireClick : ()->Unit
+    onAddLocataireClick : ()->Unit,
+    onDeleteLocataireClick : ()->Unit
 ) {
     val locataires = viewModel.locataires.value
     val errorMessage = viewModel.errorMessage.value
@@ -74,12 +76,17 @@ fun LocataireList(
                         }
                     }
                 }
-
+                FloatingActionButton(
+                    onClick = {onDeleteLocataireClick()},
+                    modifier = Modifier.align(Alignment.BottomEnd).padding(vertical = 85.dp, horizontal = 16.dp),
+                    containerColor = MaterialTheme.colorScheme.primary,
+                    content = { Icon(Icons.Default.Delete, contentDescription = "Supprimer un locataire")}
+                )
                 FloatingActionButton(
                     onClick = {onAddLocataireClick()},
                     modifier = Modifier.align(Alignment.BottomEnd).padding(16.dp),
                     containerColor = MaterialTheme.colorScheme.primary,
-                    content = { Icon(Icons.Default.Add, contentDescription = "Ajouter un batiment")}
+                    content = { Icon(Icons.Default.Add, contentDescription = "Ajouter un locataire")}
                 )
             }
         }

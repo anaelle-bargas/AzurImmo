@@ -32,7 +32,7 @@ fun AppartementCard (appartement: Appartement){
             }
             Row{
                 Text(text = "Description : ",style = MaterialTheme.typography.bodyLarge.copy(fontWeight = FontWeight.Bold))
-                Text(text =appartement.description,style = MaterialTheme.typography.bodyLarge)
+                Text(text = appartement.description?:"Non renseigné",style = MaterialTheme.typography.bodyLarge)
             }
             Row{
                 Text(text="Surface :", style = MaterialTheme.typography.bodyLarge.copy(fontWeight = FontWeight.Bold))

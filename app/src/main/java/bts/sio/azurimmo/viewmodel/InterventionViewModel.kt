@@ -21,10 +21,10 @@ class InterventionViewModel:ViewModel() {
     val errorMessage:State<String?> = _errorMessage
 
     init {
-        getIntervention()
+        getInterventions()
     }
 
-    private fun getIntervention(){
+    fun getInterventions(){
         viewModelScope.launch {
             _isLoading.value=true
             try {
@@ -46,7 +46,7 @@ class InterventionViewModel:ViewModel() {
                 Log.d("intervention", "L'intervention' : ${intervention.toString()}")
                 val response = RetrofitInstance.api.addIntervention(intervention)
                 if(response.isSuccessful()){
-                    getIntervention()
+                    getInterventions()
                 }
                 else{
                     _errorMessage.value="Erreur dans l'ajout d'une intervention ${response.message()}"

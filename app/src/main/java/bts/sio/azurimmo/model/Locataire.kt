@@ -5,10 +5,10 @@ import java.util.Date
 
 data class Locataire(
     val id:Int,
-    val nom:String,
-    val prenom:String,
-    val date_naissance: String,
-    val lieu_naissance:String,
-    val email:String,
-    val telephone:String
+    val nom:String?=null,
+    val prenom:String?=null,
+    val date_naissance: String?=null,
+    val lieu_naissance:String?=null,
+    val email:String?=null,
+    val telephone:String?=null
 )

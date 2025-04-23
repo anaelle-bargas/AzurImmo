@@ -13,6 +13,7 @@ import androidx.compose.foundation.lazy.LazyColumn
 import androidx.compose.foundation.lazy.items
 import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.filled.Add
+import androidx.compose.material.icons.filled.Delete
 import androidx.compose.material3.Button
 import androidx.compose.material3.CircularProgressIndicator
 import androidx.compose.material3.FloatingActionButton
@@ -37,7 +38,8 @@ import bts.sio.azurimmo.viewmodel.BatimentViewModel
 fun AppartementList (
     viewModel:AppartementViewModel= viewModel(),
     batimentId: Int? = null,
-    onAddAppartementClick: (Int?) -> Unit
+    onAddAppartementClick: (Int?) -> Unit,
+    onDeleteAppartementClick : (Int?) -> Unit
 ){
     val viewModelBat:BatimentViewModel= viewModel()
     val batiment = viewModelBat.batiment.value
@@ -132,7 +134,12 @@ fun AppartementList (
                     }
                 }
 
-
+                FloatingActionButton(
+                    onClick = {onDeleteAppartementClick(batimentId)},
+                    modifier = Modifier.align(Alignment.BottomEnd).padding(vertical = 85.dp, horizontal = 16.dp),
+                    containerColor = MaterialTheme.colorScheme.primary,
+                    content = { Icon(Icons.Default.Delete, contentDescription = "Supprimer un appartement")}
+                )
 
                     FloatingActionButton(
                         onClick = { onAddAppartementClick(batimentId) },

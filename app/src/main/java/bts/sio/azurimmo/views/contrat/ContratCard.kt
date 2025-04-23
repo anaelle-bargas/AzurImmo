@@ -25,8 +25,8 @@ fun ContratCard(contrat: Contrat){
     ) {
         Column(modifier = Modifier.padding(8.dp)) {
             Text(text="Appartement n° "+contrat.appartement.numero, style=MaterialTheme.typography.labelLarge)
-            Text(text="Adresse : "+contrat.appartement.batiment.adresse, style = MaterialTheme.typography.bodyLarge)
-            Text(text="Ville : "+contrat.appartement.batiment.ville, style = MaterialTheme.typography.bodyMedium)
+            Text(text="Adresse : "+contrat.appartement.batiment?.adresse, style = MaterialTheme.typography.bodyLarge)
+            Text(text="Ville : "+contrat.appartement.batiment?.ville, style = MaterialTheme.typography.bodyMedium)
             Text(text="Contractant : "+contrat.locataire.nom+" "+contrat.locataire.prenom, style=MaterialTheme.typography.bodyLarge)
             Text(text = "From : "+contrat.date_entree+" to "+contrat.date_sortie, style = MaterialTheme.typography.bodySmall)
 
