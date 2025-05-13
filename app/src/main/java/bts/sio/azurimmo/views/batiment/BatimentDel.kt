@@ -45,16 +45,14 @@ fun BatimentDel(
     val batiments = viewModel.batiments.value
     var expanded by remember { mutableStateOf(false) }
     var batimentChoisi by remember { mutableStateOf(batiments.firstOrNull()) }
-    val appartementsLies = appartementViewModel.appartements.value
-
+    val deleteText = when {
+        !batimentChoisi?.adresse.isNullOrBlank() && !batimentChoisi?.ville.isNullOrBlank() -> "${batimentChoisi?.adresse}, ${batimentChoisi?.ville}"
+        !batimentChoisi?.adresse.isNullOrBlank() -> batimentChoisi?.adresse
+        !batimentChoisi?.ville.isNullOrBlank() -> batimentChoisi?.ville
+        else -> "Sélectionner un bâtiment"
+    }
     val snackbarHostState = remember { SnackbarHostState() }
     val scope = rememberCoroutineScope()
-
-    LaunchedEffect(batimentChoisi) {
-        batimentChoisi?.id?.let { id ->
-            appartementViewModel.getAppartementsByBatimentId(id)
-        }
-    }
 
     Scaffold(
         snackbarHost = { SnackbarHost(hostState = snackbarHostState) }
@@ -86,7 +84,7 @@ fun BatimentDel(
                 horizontalAlignment = Alignment.CenterHorizontally
             ) {
                 Text(
-                    text = batimentChoisi?.adresse ?: "Sélectionner un bâtiment",
+                    text = deleteText ?: "Sélectionner un bâtiment",
                     style = MaterialTheme.typography.bodyLarge
                 )
             }
@@ -112,16 +110,9 @@ fun BatimentDel(
             Button(
                 onClick = {
                     if (batimentChoisi != null) {
-                        if (appartementsLies.isEmpty()) {
-                            batimentChoisi?.id?.let { viewModel.delBatiment(it) }
-                            onDelBatiment()
-                        } else {
-                            scope.launch {
-                                snackbarHostState.showSnackbar(
-                                    "Le bâtiment n'est pas vide, veuillez d'abord supprimer ses appartements."
-                                )
-                            }
-                        }
+                        batimentChoisi?.id?.let { viewModel.delBatiment(it) }
+                        onDelBatiment()
+
                     }
                 },
                 enabled = batimentChoisi != null,

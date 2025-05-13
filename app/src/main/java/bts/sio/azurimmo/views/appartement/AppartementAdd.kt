@@ -118,7 +118,8 @@ fun AppartementAdd (
                         nbPiecesOriginal = nb_pieces_original.toInt(),
                         numero = numero.toInt(),
                         surface = surface.toDouble(),
-                        batiment = Batiment(id = (if(idBatiment!=null) idBatiment else batimentChoisi?.id) )
+                        batiment = Batiment(id = (if(idBatiment!=null) idBatiment else batimentChoisi?.id) ),
+                        archive = false
                     )
                     viewModel.addAppartement(appartement)
                     onAddAppartement()

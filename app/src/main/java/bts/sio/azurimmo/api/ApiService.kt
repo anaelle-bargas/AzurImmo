@@ -48,6 +48,9 @@ interface ApiService{
     @GET("api/interventions/appartement/{appartementId}")
     suspend fun getInterventionsByAppartementId(@Path("appartementId") appartementId:Int) : List<Intervention>
 
+    @GET("api/contrats/appartement/{appartementId}")
+    suspend fun getContratsByAppartementId(@Path("appartementId") appartementId:Int) : List<Contrat>
+
 
     @GET("api/batiments/id/{id}")
     suspend fun getBatimentById(@Path("id") id : Int) : Batiment
@@ -71,20 +74,27 @@ interface ApiService{
     @POST("api/intervenants/")
     suspend fun addIntervenant(@Body intervenant: Intervenant) : Response<Intervenant>
 
+    @POST("api/contrats/")
+    suspend fun addContrat(@Body contrat: Contrat) : Response<Contrat>
+
+
     @POST("api/type_interventions/")
     suspend fun addTypeIntervention(@Body typeIntervention: TypeIntervention) : Response<TypeIntervention>
 
-    @DELETE("api/batiments/{batimentId}")
-    suspend fun delBatiment(@Path("batimentId") batimentId:Int) : Response<Unit>
+    @PUT("api/batiments/archiver/{batimentId}")
+    suspend fun delBatiment(@Path("batimentId") batimentId:Int) : Response<Batiment>
 
-    @DELETE("api/locataires/{locataireId}")
-    suspend fun delLocataire(@Path("locataireId") locataireId:Int) : Response<Unit>
+    @PUT("api/locataires/archiver/{locataireId}")
+    suspend fun delLocataire(@Path("locataireId") locataireId:Int) : Response<Locataire>
 
-    @DELETE("api/appartements/{appartementId}")
-    suspend fun delAppartement(@Path("appartementId") appartementId:Int) : Response<Unit>
+    @PUT("api/appartements/archiver/{appartementId}")
+    suspend fun delAppartement(@Path("appartementId") appartementId:Int) : Response<Appartement>
 
-    @DELETE("api/interventions/{interventionId}")
-    suspend fun delIntervention(@Path("interventionId") interventionId:Int) : Response<Unit>
+    @PUT("api/interventions/archiver/{interventionId}")
+    suspend fun delIntervention(@Path("interventionId") interventionId:Int) : Response<Intervention>
+
+    @PUT("api/contrats/archiver/{contratId}")
+    suspend fun delContrat(@Path("contratId") contratId:Int) : Response<Contrat>
 
 
     @PUT("api/batiments/")

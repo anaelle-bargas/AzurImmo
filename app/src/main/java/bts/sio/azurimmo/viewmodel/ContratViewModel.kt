@@ -1,5 +1,6 @@
 package bts.sio.azurimmo.viewmodel
 
+import android.util.Log
 import androidx.compose.runtime.State
 import androidx.compose.runtime.mutableStateOf
 import androidx.lifecycle.ViewModel
@@ -22,7 +23,7 @@ class ContratViewModel:ViewModel() {
         getContrats()
     }
 
-    private fun getContrats(){
+    fun getContrats(){
         viewModelScope.launch {
             _isLoading.value=true
             try {
@@ -30,6 +31,61 @@ class ContratViewModel:ViewModel() {
                 _contrats.value = response
             }catch (e:Exception){
                 _errorMessage.value="Erreur dans la récupération des contrats: ${e.message}"
+            }finally {
+                _isLoading.value=false
+            }
+        }
+    }
+
+    fun addContrat(contrat: Contrat){
+        viewModelScope.launch {
+            _isLoading.value=true
+            try{
+                Log.d("contrat", "Le contrat' : ${contrat.toString()}")
+                val response = RetrofitInstance.api.addContrat(contrat)
+                if(response.isSuccessful()){
+                    getContrats()
+                }
+                else{
+                    _errorMessage.value="Erreur dans l'ajout d'une contrat ${response.message()}"
+                }
+            }catch (e:Exception){
+                _errorMessage.value="Erreur dans l'ajout d'une contrat : ${e.message}"
+            }finally {
+                _isLoading.value=false
+            }
+        }
+    }
+
+    fun delContrat(contratId: Int){
+        viewModelScope.launch {
+            _isLoading.value=true
+            try{
+                Log.d("contratId", "Le contratId : ${contratId}")
+                val response = RetrofitInstance.api.delContrat(contratId)
+                if(response.isSuccessful()){
+                    getContrats()
+                } else{
+                    _errorMessage.value="Erreur dans la suppression d'un contrat ${response.message()}"
+                }
+            }catch (e:Exception){
+                _errorMessage.value="Erreur dans la suppression d'un contrat : ${e.message}"
+            }finally {
+                _isLoading.value=false
+            }
+        }
+
+
+    }
+
+    fun getContratsByAppartementId(appartementId : Int){
+        viewModelScope.launch{
+            _isLoading.value = true
+            try{
+                val response= RetrofitInstance.api.getContratsByAppartementId(appartementId)
+                _contrats.value = response
+            }catch(e:Exception){
+                _errorMessage.value="Erreur dans la récupération des contrats de l'appartement ${appartementId} : ${e.message}"
             }finally {
                 _isLoading.value=false
             }

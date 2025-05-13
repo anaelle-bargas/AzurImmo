@@ -3,9 +3,11 @@ package bts.sio.azurimmo.views.navBar
 import android.graphics.drawable.Icon
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.material.icons.Icons
+import androidx.compose.material.icons.filled.AccountCircle
 import androidx.compose.material.icons.filled.Build
 import androidx.compose.material.icons.filled.CheckCircle
 import androidx.compose.material.icons.filled.Home
+import androidx.compose.material.icons.filled.ShoppingCart
 import androidx.compose.material3.Icon
 import androidx.compose.material3.NavigationBar
 import androidx.compose.material3.NavigationBarItem
@@ -22,9 +24,10 @@ import androidx.navigation.compose.currentBackStackEntryAsState
 fun AppNavBar(navController: NavController) {
     val items = listOf(
         BottomNavItem("Batiments", Icons.Default.Home, "batiment_list"),
-        BottomNavItem("Locataires", Icons.Default.Build, "locataires_list"),
-        BottomNavItem("Appartements", Icons.Default.CheckCircle, "appartement_list"),
-        BottomNavItem("Interventions", Icons.Default.Build, "interventions_list")
+        BottomNavItem("Apparts", Icons.Default.CheckCircle, "appartement_list"),
+        BottomNavItem("Inters", Icons.Default.Build, "interventions_list"),
+        BottomNavItem("Locataires", Icons.Default.AccountCircle, "locataires_list"),
+        BottomNavItem("Contrats", Icons.Default.ShoppingCart, "contrats_list")
     )
 
 

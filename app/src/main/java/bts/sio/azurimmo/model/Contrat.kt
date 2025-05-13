@@ -3,11 +3,12 @@ package bts.sio.azurimmo.model
 import java.util.Date
 
 data class Contrat(
-    val date_entree:Date,
-    val date_sortie: Date,
-    val montant_loyer: Float,
-    val montant_charges: Float,
-    val appartement: Appartement,
-    val associe:Associe,
-    val locataire:Locataire
+    val id: Int?,
+    val date_entree:String?=null,
+    val archive:Boolean?=null,
+    val date_sortie: String?=null,
+    val montant_loyer: Float?=null,
+    val montant_charges: Float?=null,
+    val appartement: Appartement?=null,
+    val locataire:Locataire?=null
 )

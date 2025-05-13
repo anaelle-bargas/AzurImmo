@@ -36,7 +36,6 @@ import kotlinx.coroutines.launch
 fun AppartementDel(
     onDelAppartement: () -> Unit,
     viewModel: AppartementViewModel = viewModel(),
-    interventionViewModel: InterventionViewModel = viewModel(),
     idBatiment: Int?=null
 ) {
     LaunchedEffect(Unit) {
@@ -50,16 +49,10 @@ fun AppartementDel(
     val appartements = viewModel.appartements.value
     var expanded by remember { mutableStateOf(false) }
     var appartementChoisi by remember { mutableStateOf(appartements.firstOrNull()) }
-    var interventionsLies = interventionViewModel.interventions.value
 
     val snackbarHostState = remember { SnackbarHostState() }
     val scope = rememberCoroutineScope()
 
-    LaunchedEffect(appartementChoisi) {
-        appartementChoisi?.id?.let { id ->
-            interventionViewModel.getInterventionsByAppartementId(id)
-        }
-    }
     Scaffold(
         snackbarHost = { SnackbarHost(hostState = snackbarHostState) }
     ) { padding ->
@@ -118,16 +111,9 @@ fun AppartementDel(
             Button(
                 onClick = {
                     if (appartementChoisi != null) {
-                        if (interventionsLies.isEmpty()) {
-                            appartementChoisi?.id?.let { viewModel.delAppartement(it) }
-                            onDelAppartement()
-                        } else {
-                            scope.launch {
-                                snackbarHostState.showSnackbar(
-                                    "L'appartement n'est pas vide, veuillez d'abord supprimer ses interventions."
-                                )
-                            }
-                        }
+                        appartementChoisi?.id?.let { viewModel.delAppartement(it) }
+                        onDelAppartement()
+
 
                     }
                 },

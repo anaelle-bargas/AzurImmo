@@ -48,7 +48,7 @@ fun BatimentAdd(
         Button(
             onClick = {
                 if(adresse.isNotBlank() && ville.isNotBlank()){
-                    val batiment = Batiment(id = 0, adresse =adresse, ville =ville)
+                    val batiment = Batiment(id = 0, adresse =adresse, ville =ville, archive=false)
                     viewModel.addBatiment(batiment)
                     onBatimentAdd()
                 }

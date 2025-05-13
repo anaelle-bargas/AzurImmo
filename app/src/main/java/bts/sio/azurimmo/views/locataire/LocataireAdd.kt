@@ -22,6 +22,7 @@ import bts.sio.azurimmo.model.Locataire
 import bts.sio.azurimmo.viewmodel.LocataireViewModel
 import java.sql.Date
 import java.text.SimpleDateFormat
+import java.util.Locale
 
 @Composable
 fun LocataireAdd(
@@ -83,9 +84,10 @@ fun LocataireAdd(
             onClick = {
 
                 if(date_naissance!=null && lieu_naissance.isNotEmpty() && nom.isNotEmpty() && prenom.isNotEmpty() && email.isNotEmpty() && telephone.isNotEmpty()){
-                    val sdf = SimpleDateFormat("yyyy-MM-dd")
-                    val formattedDate = sdf.format(java.util.Date(date_naissance))
-                    val locataire = Locataire(id=0, nom=nom, prenom = prenom, date_naissance = formattedDate, lieu_naissance=lieu_naissance, email=email, telephone=telephone)
+                    val sdf = SimpleDateFormat("yyyy-MM-dd", Locale.getDefault())
+                    val parsedDate: java.util.Date = sdf.parse(date_naissance)!!
+                    val sqlDate = java.sql.Date(parsedDate.time)
+                    val locataire = Locataire(id=0, nom=nom, prenom = prenom, date_naissance = sqlDate.toString(), lieu_naissance=lieu_naissance, email=email, telephone=telephone, archive=false)
                     viewModel.addLocataire(locataire)
                     onAddLocataire()
                 }
