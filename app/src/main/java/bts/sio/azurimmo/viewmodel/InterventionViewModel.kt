@@ -59,6 +59,38 @@ class InterventionViewModel:ViewModel() {
         }
     }
 
+    fun getInterventionsByAppartementId(appartementId : Int){
+        viewModelScope.launch{
+            _isLoading.value = true
+            try{
+                val response= RetrofitInstance.api.getInterventionsByAppartementId(appartementId)
+                _interventions.value = response
+            }catch(e:Exception){
+                _errorMessage.value="Erreur dans la récupération des intervenants de l'appartement ${appartementId} : ${e.message}"
+            }finally {
+                _isLoading.value=false
+            }
+        }
+    }
+
+    fun delIntervention(interventionId: Int){
+        viewModelScope.launch {
+            _isLoading.value=true
+            try{
+                Log.d("interventionId", "Le interventionId : ${interventionId}")
+                val response = RetrofitInstance.api.delIntervention(interventionId)
+                if(response.isSuccessful()){
+                    getInterventions()
+                } else{
+                    _errorMessage.value="Erreur dans la suppression d'un intervention ${response.message()}"
+                }
+            }catch (e:Exception){
+                _errorMessage.value="Erreur dans la suppression d'un intervention : ${e.message}"
+            }finally {
+                _isLoading.value=false
+            }
+        }
+    }
 
 
 }

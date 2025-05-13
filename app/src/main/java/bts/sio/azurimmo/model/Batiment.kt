@@ -2,7 +2,7 @@ package bts.sio.azurimmo.model
 
 data class Batiment(
     val id: Int?,
-    val adresse:String? = null,
-    val ville:String? = null,
+    var adresse:String? = null,
+    var ville:String? = null,
     val appartements:List<Appartement>?=null
 )

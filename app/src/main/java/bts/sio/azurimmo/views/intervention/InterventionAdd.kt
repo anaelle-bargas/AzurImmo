@@ -40,7 +40,8 @@ fun InterventionAdd(
     viewModel: InterventionViewModel = viewModel(),
     appartementViewModel: AppartementViewModel = viewModel(),
     typeInterventionViewModel: TypeInterventionViewModel = viewModel(),
-    intervenantViewModel: IntervenantViewModel = viewModel()
+    intervenantViewModel: IntervenantViewModel = viewModel(),
+    idAppartement: Int? = null
 ) {
     var description by remember { mutableStateOf("") }
     var date by remember { mutableStateOf("") }

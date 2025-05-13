@@ -13,6 +13,7 @@ import retrofit2.http.Body
 import retrofit2.http.DELETE
 import retrofit2.http.GET
 import retrofit2.http.POST
+import retrofit2.http.PUT
 import retrofit2.http.Path
 
 interface ApiService{
@@ -44,8 +45,15 @@ interface ApiService{
     @GET("api/appartements/batiment/{batimentId}")
     suspend fun getAppartementsByBatimentId(@Path("batimentId") batimentId:Int) : List<Appartement>
 
+    @GET("api/interventions/appartement/{appartementId}")
+    suspend fun getInterventionsByAppartementId(@Path("appartementId") appartementId:Int) : List<Intervention>
+
+
     @GET("api/batiments/id/{id}")
     suspend fun getBatimentById(@Path("id") id : Int) : Batiment
+
+    @GET("api/appartements/id/{id}")
+    suspend fun getAppartementById(@Path("id") id : Int) : Appartement
 
 
     @POST("api/batiments/")
@@ -74,5 +82,15 @@ interface ApiService{
 
     @DELETE("api/appartements/{appartementId}")
     suspend fun delAppartement(@Path("appartementId") appartementId:Int) : Response<Unit>
+
+    @DELETE("api/interventions/{interventionId}")
+    suspend fun delIntervention(@Path("interventionId") interventionId:Int) : Response<Unit>
+
+
+    @PUT("api/batiments/")
+    suspend fun modifyBatiment(@Body batiment : Batiment) : Response<Batiment>
+
+    @PUT("api/appartements/")
+    suspend fun modifyAppartement(@Body appartement : Appartement) : Response<Appartement>
 
 }

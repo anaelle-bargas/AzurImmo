@@ -10,6 +10,7 @@ import androidx.compose.foundation.lazy.LazyColumn
 import androidx.compose.foundation.lazy.items
 import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.filled.Add
+import androidx.compose.material.icons.filled.Delete
 import androidx.compose.material3.CircularProgressIndicator
 import androidx.compose.material3.FloatingActionButton
 import androidx.compose.material3.Icon
@@ -30,7 +31,8 @@ import bts.sio.azurimmo.views.intervention.InterventionCard
 
 @Composable
 fun InterventionList(
-    onAddInterventionClick : ()->Unit
+    onAddInterventionClick : ()->Unit,
+    onDeleteInterventionClick : ()->Unit
 ){
     val viewModel: InterventionViewModel = viewModel()
     val interventions=viewModel.interventions.value
@@ -58,7 +60,12 @@ fun InterventionList(
                         InterventionCard(intervention=intervention)
                     }
                 }
-
+                FloatingActionButton(
+                    onClick = {onDeleteInterventionClick()},
+                    modifier = Modifier.align(Alignment.BottomEnd).padding(vertical = 85.dp, horizontal = 16.dp),
+                    containerColor = MaterialTheme.colorScheme.primary,
+                    content = { Icon(Icons.Default.Delete, contentDescription = "Supprimer un appartement")}
+                )
                 FloatingActionButton(
                     modifier = Modifier.align(Alignment.BottomEnd).padding(16.dp),
                     containerColor = MaterialTheme.colorScheme.primary,

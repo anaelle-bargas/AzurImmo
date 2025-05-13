@@ -97,4 +97,23 @@ class BatimentViewModel : ViewModel() {
             }
         }
     }
+
+    fun modifyBatiment(batiment : Batiment){
+        viewModelScope.launch {
+            _isLoading.value=true
+            try{
+                Log.d("batimentmod", "Le batiment : ${batiment.toString()}")
+                val response = RetrofitInstance.api.modifyBatiment(batiment)
+                if(response.isSuccessful()){
+                    getBatiments()
+                } else{
+                    _errorMessage.value="Erreur dans la modification d'un batiment ${response.message()}"
+                }
+            }catch (e:Exception){
+                _errorMessage.value="Erreur dans la modification d'un batiment : ${e.message}"
+            }finally {
+                _isLoading.value=false
+            }
+        }
+    }
 }

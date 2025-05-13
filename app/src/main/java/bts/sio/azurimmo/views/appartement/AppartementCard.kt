@@ -1,5 +1,6 @@
 package bts.sio.azurimmo.views.appartement
 
+import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.Row
 import androidx.compose.foundation.layout.fillMaxWidth
@@ -15,10 +16,11 @@ import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.unit.dp
 import bts.sio.azurimmo.model.Appartement
 @Composable
-fun AppartementCard (appartement: Appartement){
+fun AppartementCard (appartement: Appartement, onClick : (Int?)->Unit){
     Card (
         modifier = Modifier
             .fillMaxWidth()
+            .clickable { onClick(appartement.id) }
             .padding(8.dp),
         elevation = CardDefaults.elevatedCardElevation(defaultElevation = 8.dp),
         shape = RoundedCornerShape(8.dp)
@@ -33,6 +35,14 @@ fun AppartementCard (appartement: Appartement){
             Row{
                 Text(text = "Description : ",style = MaterialTheme.typography.bodyLarge.copy(fontWeight = FontWeight.Bold))
                 Text(text = appartement.description?:"Non renseigné",style = MaterialTheme.typography.bodyLarge)
+            }
+            Row{
+                Text(text="Adresse :", style = MaterialTheme.typography.bodyLarge.copy(fontWeight = FontWeight.Bold))
+                Text(text=appartement.batiment?.adresse?:"L'adresse n'est pas spécifiée", style=MaterialTheme.typography.bodyLarge)
+            }
+            Row{
+                Text(text="Ville :", style = MaterialTheme.typography.bodyLarge.copy(fontWeight = FontWeight.Bold))
+                Text(text=appartement.batiment?.ville?:"La ville n'est pas spécifiée", style=MaterialTheme.typography.bodyLarge)
             }
             Row{
                 Text(text="Surface :", style = MaterialTheme.typography.bodyLarge.copy(fontWeight = FontWeight.Bold))

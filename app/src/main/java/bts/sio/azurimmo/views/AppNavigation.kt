@@ -11,11 +11,16 @@ import androidx.navigation.compose.NavHost
 import androidx.navigation.compose.composable
 import androidx.navigation.navArgument
 import bts.sio.azurimmo.views.appartement.AppartementAdd
+import bts.sio.azurimmo.views.appartement.AppartementConsult
 import bts.sio.azurimmo.views.appartement.AppartementDel
 import bts.sio.azurimmo.views.appartement.AppartementList
+import bts.sio.azurimmo.views.appartement.AppartementModify
+import bts.sio.azurimmo.views.appartement.InterventionDel
 import bts.sio.azurimmo.views.batiment.BatimentAdd
+import bts.sio.azurimmo.views.batiment.BatimentConsult
 import bts.sio.azurimmo.views.batiment.BatimentDel
 import bts.sio.azurimmo.views.batiment.BatimentList
+import bts.sio.azurimmo.views.batiment.BatimentModify
 import bts.sio.azurimmo.views.locataire.LocataireDel
 import bts.sio.azurimmo.views.contrat.InterventionList
 import bts.sio.azurimmo.views.intervention.InterventionAdd
@@ -37,16 +42,23 @@ fun AppNavigation(navController: NavHostController, modifier: Modifier){
         }
 
         composable("batiment_appartements_list/{batimentId}", listOf(navArgument("batimentId"){type= NavType.IntType})){
-                backStackEntry->
+            backStackEntry->
             val batimentId=backStackEntry.arguments?.getInt("batimentId")
             if(batimentId!=null){
-                AppartementList(
+                //AppartementList(
+                BatimentConsult (
                     batimentId =batimentId,
                     onAddAppartementClick = {batimentId->
                         navController.navigate("add_appartement/$batimentId")
                     },
                     onDeleteAppartementClick = {batimentId->
                         navController.navigate("del_appartement/$batimentId")
+                    },
+                    onModifyBatimentClick = {batimentId->
+                        navController.navigate("mod_batiment/$batimentId")
+                    },
+                    onAppartementClick = {appartementId->
+                        navController.navigate("consult_appartement/$appartementId")
                     }
                 )
                 Log.d("BatimentClik", "Batiment cliqué : $batimentId")
@@ -54,6 +66,29 @@ fun AppNavigation(navController: NavHostController, modifier: Modifier){
                 Text(text="Identifiant manquant", color = MaterialTheme.colorScheme.error)
             }
 
+        }
+
+
+
+        composable("consult_appartement/{appartementId}", listOf(navArgument("appartementId"){type= NavType.IntType})){
+            backStackEntry->
+            val appartementId=backStackEntry.arguments?.getInt("appartementId")
+            if(appartementId!=null){
+                //AppartementList(
+                AppartementConsult (
+                    appartementId =appartementId,
+                    onModifyAppartementClick = {appartementId->
+                        navController.navigate("mod_appartement/$appartementId")
+                    },
+                    onAddInterventionClick = {navController.navigate(route = "add_intervention") },
+                    onDeleteInterventionClick = {interventionId->
+                        navController.navigate("del_intervention/$interventionId")
+                    }
+                )
+                Log.d("AppartementClik", "Appartement cliqué : $appartementId")
+            }else{
+                Text(text="Identifiant manquant", color = MaterialTheme.colorScheme.error)
+            }
         }
 
 
@@ -68,12 +103,19 @@ fun AppNavigation(navController: NavHostController, modifier: Modifier){
         composable("appartement_list"){
             AppartementList(
                 onAddAppartementClick = {navController.navigate(route = "add_appartement") },
-                onDeleteAppartementClick = {navController.navigate(route="del_appartement")}
+                onDeleteAppartementClick = {navController.navigate(route="del_appartement")},
+                onAppartementClick =  { appartementId ->
+                    navController.navigate("consult_appartement/$appartementId")
+                }
+
             )
         }
 
         composable("interventions_list"){
-            InterventionList(onAddInterventionClick = {navController.navigate("add_intervention")})
+            InterventionList(
+                onAddInterventionClick = {navController.navigate("add_intervention")},
+                onDeleteInterventionClick = {navController.navigate("del_intervention")}
+            )
         }
 
         composable("add_intervention"){
@@ -115,6 +157,14 @@ fun AppNavigation(navController: NavHostController, modifier: Modifier){
         }
 
 
+        composable("add_intervention"){
+            InterventionAdd(
+                onAddIntervention = { navController.popBackStack() },
+                idAppartement = null
+            )
+        }
+
+
         composable("del_batiment"){
             BatimentDel(
                 onDelBatiment = { navController.popBackStack()}
@@ -140,6 +190,44 @@ fun AppNavigation(navController: NavHostController, modifier: Modifier){
             AppartementDel(
                 onDelAppartement = { navController.popBackStack()}
             )
+        }
+
+
+        composable("del_intervention/{idAppartement}", listOf(navArgument("idAppartement"){type=NavType.IntType})){
+                backStackEntry->
+            val idAppartement = backStackEntry.arguments?.getInt("idAppartement")
+            InterventionDel(
+                onDelIntervention = { navController.popBackStack()},
+                idAppartement=idAppartement
+            )
+        }
+
+        composable("del_intervention") {
+            InterventionDel(
+                onDelIntervention = { navController.popBackStack() }
+            )
+        }
+
+        composable("mod_batiment/{idBatiment}", listOf(navArgument("idBatiment"){type=NavType.IntType})){
+            backStackEntry->
+            val idBatiment = backStackEntry.arguments?.getInt("idBatiment")
+            if (idBatiment != null) {
+                BatimentModify(
+                    onModifyBatiment = { navController.popBackStack()},
+                    idBatiment = idBatiment
+                )
+            }
+        }
+
+        composable("mod_appartement/{idAppartement}", listOf(navArgument("idAppartement"){type=NavType.IntType})){
+                backStackEntry->
+            val idAppartement = backStackEntry.arguments?.getInt("idAppartement")
+            if (idAppartement != null) {
+                AppartementModify(
+                    onModifyAppartement = { navController.popBackStack()},
+                    idAppartement = idAppartement
+                )
+            }
         }
     }
 }

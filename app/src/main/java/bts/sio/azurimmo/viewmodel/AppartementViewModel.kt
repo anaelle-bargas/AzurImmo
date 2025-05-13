@@ -7,6 +7,7 @@ import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import bts.sio.azurimmo.api.RetrofitInstance
 import bts.sio.azurimmo.model.Appartement
+import bts.sio.azurimmo.model.Batiment
 import kotlinx.coroutines.launch
 
 class AppartementViewModel : ViewModel(){
@@ -19,6 +20,9 @@ class AppartementViewModel : ViewModel(){
 
     private val _errorMessage= mutableStateOf<String?>(null)
     val errorMessage:State<String?> = _errorMessage
+
+    private val _appartement = mutableStateOf<Appartement?>(null)
+    val appartement : State<Appartement?> = _appartement
 
     init{
         getAppartements()
@@ -71,7 +75,20 @@ class AppartementViewModel : ViewModel(){
         }
     }
 
+    fun getAppartementById(id:Int){
+        viewModelScope.launch {
+            _isLoading.value=true
+            try{
+                val response= RetrofitInstance.api.getAppartementById(id)
+                _appartement.value = response
+            }catch (e:Exception){
+                _errorMessage.value = "Erreur dans la récupératioin de l'appartement ${id}"
+            }finally{
+                _isLoading.value=false
+            }
+        }
 
+    }
     fun delAppartement(appartementId: Int){
         viewModelScope.launch {
             _isLoading.value=true
@@ -85,6 +102,25 @@ class AppartementViewModel : ViewModel(){
                 }
             }catch (e:Exception){
                 _errorMessage.value="Erreur dans la suppression d'un appartement : ${e.message}"
+            }finally {
+                _isLoading.value=false
+            }
+        }
+    }
+
+    fun modifyAppartement(appartement : Appartement){
+        viewModelScope.launch {
+            _isLoading.value=true
+            try{
+                Log.d("appartementmod", "L'appartement : ${appartement.toString()}")
+                val response = RetrofitInstance.api.modifyAppartement(appartement)
+                if(response.isSuccessful()){
+                    getAppartements()
+                } else{
+                    _errorMessage.value="Erreur dans la modification d'un appartement ${response.message()}"
+                }
+            }catch (e:Exception){
+                _errorMessage.value="Erreur dans la modification d'un appartement : ${e.message}"
             }finally {
                 _isLoading.value=false
             }
