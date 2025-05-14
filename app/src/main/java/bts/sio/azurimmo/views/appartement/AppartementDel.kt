@@ -50,12 +50,12 @@ fun AppartementDel(
     var expanded by remember { mutableStateOf(false) }
     var appartementChoisi by remember { mutableStateOf(appartements.firstOrNull()) }
 
-    val snackbarHostState = remember { SnackbarHostState() }
-    val scope = rememberCoroutineScope()
+    val deleteText = when {
+        !appartementChoisi?.numero.toString().isNullOrBlank() && !appartementChoisi?.batiment?.adresse.isNullOrBlank() && !appartementChoisi?.batiment?.ville.isNullOrBlank() -> "${appartementChoisi?.numero} ${appartementChoisi?.batiment?.adresse}, ${appartementChoisi?.batiment?.ville}"
+        else -> "Sélectionner un appartement"
+    }
 
-    Scaffold(
-        snackbarHost = { SnackbarHost(hostState = snackbarHostState) }
-    ) { padding ->
+
         Column(
             modifier = Modifier
                 .fillMaxSize()
@@ -81,10 +81,12 @@ fun AppartementDel(
                     .align(Alignment.CenterHorizontally),
                 horizontalAlignment = Alignment.CenterHorizontally
             ) {
-                Text(
-                    text = appartementChoisi?.description ?: "Sélectionner un appartements",
-                    style = MaterialTheme.typography.bodyLarge
-                )
+                if (deleteText != null) {
+                    Text(
+                        text = deleteText.toString(),
+                        style = MaterialTheme.typography.bodyLarge
+                    )
+                }
             }
 
             DropdownMenu(
@@ -95,7 +97,7 @@ fun AppartementDel(
                     DropdownMenuItem(
                         text = {
                             Text(
-                                "" + appartement?.numero + "-" + appartement?.batiment?.adresse + "-" + appartement?.batiment?.ville,
+                                "" + appartement?.numero + " " + appartement?.batiment?.adresse + ", " + appartement?.batiment?.ville,
                                 style = MaterialTheme.typography.bodyLarge
                             )
 
@@ -125,6 +127,6 @@ fun AppartementDel(
                 Text("Supprimer")
             }
         }
-    }
+
 }
 

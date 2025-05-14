@@ -96,7 +96,7 @@ fun BatimentDel(
                 batiments.forEach { batiment ->
                     DropdownMenuItem(
                         text = {
-                            Text("${batiment.adresse} - ${batiment.ville}", style = MaterialTheme.typography.bodyLarge)
+                            Text("${batiment.adresse}, ${batiment.ville}", style = MaterialTheme.typography.bodyLarge)
 
                         },
                         onClick = {

@@ -27,8 +27,8 @@ fun ContratCard(contrat: Contrat){
             Text(text="Appartement n° "+contrat.appartement?.numero, style=MaterialTheme.typography.labelLarge)
             Text(text="Adresse : "+contrat.appartement?.batiment?.adresse, style = MaterialTheme.typography.bodyLarge)
             Text(text="Ville : "+contrat.appartement?.batiment?.ville, style = MaterialTheme.typography.bodyMedium)
-            Text(text="Contractant : "+contrat.locataire?.nom+" "+contrat.locataire?.prenom, style=MaterialTheme.typography.bodyLarge)
-            Text(text = "From : "+contrat.date_entree+" to "+contrat.date_sortie, style = MaterialTheme.typography.bodyLarge)
+            Text(text="Locataire : "+contrat.locataire?.nom+" "+contrat.locataire?.prenom, style=MaterialTheme.typography.bodyLarge)
+            Text(text = "Du : "+contrat.date_entree+" au "+contrat.date_sortie, style = MaterialTheme.typography.bodyLarge)
 
         }
     }

@@ -45,6 +45,10 @@ fun LocataireDel(
     var expanded by remember { mutableStateOf(false) }
     var locataireChoisi by remember { mutableStateOf(locataires.firstOrNull()) }
 
+    val deleteText = when {
+        !locataireChoisi?.nom.isNullOrBlank() && !locataireChoisi?.prenom.isNullOrBlank() -> "${locataireChoisi?.nom} ${locataireChoisi?.prenom}"
+        else -> "Sélectionner un locataire"
+    }
 
         Column(
             modifier = Modifier
@@ -72,7 +76,7 @@ fun LocataireDel(
                 horizontalAlignment = Alignment.CenterHorizontally
             ) {
                 Text(
-                    text = locataireChoisi?.nom ?: "Sélectionner un locataires",
+                    text = deleteText,
                     style = MaterialTheme.typography.bodyLarge
                 )
             }
@@ -84,7 +88,7 @@ fun LocataireDel(
                 locataires.forEach { locataire ->
                     DropdownMenuItem(
                         text = {
-                            Text("${locataire.nom} - ${locataire.prenom}", style = MaterialTheme.typography.bodyLarge)
+                            Text("${locataire.nom} ${locataire.prenom}", style = MaterialTheme.typography.bodyLarge)
 
                         },
                         onClick = {
